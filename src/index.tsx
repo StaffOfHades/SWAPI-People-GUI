@@ -9,6 +9,9 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './store';
+import { fetchPeoplePage } from './features/people/peopleSlice';
+
+store.dispatch(fetchPeoplePage({ pageUrl: 'https://swapi.dev/api/people/' }));
 
 ReactDOM.render(
   <React.StrictMode>
