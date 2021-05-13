@@ -55,7 +55,10 @@ interface AdditionalState extends Omit<PeopleList, 'results'> {
 
 const peopleAdapter = createEntityAdapter<Person>({
   selectId: (person) => person.url,
-  sortComparer: (left, right) => left.url.localeCompare(right.url),
+  sortComparer: (left, right) =>
+    left.url.length === right.url.length
+      ? left.url.localeCompare(right.url)
+      : left.url.length - right.url.length,
 });
 
 const initialState = peopleAdapter.getInitialState<AdditionalState>({
@@ -94,7 +97,14 @@ export const fetchPeoplePage = createAsyncThunk<PeopleList, { pageUrl: string; s
 const peopleSlice = createSlice({
   initialState,
   name: 'people',
-  reducers: {},
+  reducers: {
+    decreasePage(state) {
+      state.page -= 1;
+    },
+    increasePage(state) {
+      state.page += 1;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchPeoplePage.pending, (state) => {
       state.loading = LoadingState.Pending;
@@ -119,10 +129,15 @@ const peopleSlice = createSlice({
 });
 export default peopleSlice.reducer;
 
+export const { decreasePage, increasePage } = peopleSlice.actions;
+
 /* Selectors */
 
-export const { selectAll: selectPeople, selectById: selectPersonById } =
-  peopleAdapter.getSelectors<RootState>((state) => state.people);
+export const {
+  selectAll: selectPeople,
+  selectById: selectPersonById,
+  selectTotal: selectPeopleTotal,
+} = peopleAdapter.getSelectors<RootState>((state) => state.people);
 
 export const selectMaxPage = createSelector(
   (state: RootState) => state.people.count,
@@ -136,7 +151,7 @@ export const selectPeoplePage = createSelector(
   (state: RootState) => state.people.perPage,
   (people, page, perPage) => {
     // Make sure we have enough people to return
-    if (page * perPage > people.length) return [];
-    return people.slice(page * perPage, (page + 1) * perPage);
+    if ((page - 1) * perPage > people.length) return [];
+    return people.slice((page - 1) * perPage, page * perPage);
   }
 );

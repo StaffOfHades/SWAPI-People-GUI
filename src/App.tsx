@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 import React from 'react';
 
 import PeopleList from './features/people/PeopleList';
+import PeoplePaginator from './features/people/PeoplePaginator';
 import logo from './assets/logo.svg';
 import './App.css';
 
@@ -20,7 +21,12 @@ function Home(): JSX.Element {
 }
 
 function People(): JSX.Element {
-  return <PeopleList />;
+  return (
+    <div>
+      <PeopleList />
+      <PeoplePaginator />
+    </div>
+  );
 }
 
 function Dashboard(): JSX.Element {
