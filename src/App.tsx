@@ -5,7 +5,7 @@ import PeopleList from './features/people/PeopleList';
 import PeoplePaginator from './features/people/PeoplePaginator';
 import PeopleSearchbar from './features/people/PeopleSearchbar';
 import logo from './assets/logo.svg';
-import './App.css';
+import './App.scss';
 
 function Home(): JSX.Element {
   return (
