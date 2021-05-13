@@ -39,6 +39,7 @@ export interface Person {
 }
 
 export interface PeopleList {
+  current: string;
   count: number;
   next: string | null;
   previous: string | null;
@@ -49,6 +50,7 @@ interface AdditionalState extends Omit<PeopleList, 'results'> {
   loading: LoadingState;
   page: number;
   perPage: number;
+  search?: string;
 }
 
 /* Entity Adapter */
@@ -62,12 +64,14 @@ const peopleAdapter = createEntityAdapter<Person>({
 });
 
 const initialState = peopleAdapter.getInitialState<AdditionalState>({
+  current: '',
   count: 0,
   loading: LoadingState.Idle,
   next: null,
   page: 1,
   perPage: 4,
   previous: null,
+  search: undefined,
 });
 
 /* Async Thunks */
@@ -77,16 +81,19 @@ export const fetchPeoplePage = createAsyncThunk<PeopleList, { pageUrl: string; s
   async ({ pageUrl, search }) => {
     const parameters: Array<string> = [];
     if (search !== undefined) parameters.push(`search=${search}`);
-    const paramtersQuery = parameters.length > 0 ? `?${parameters.join('&')}` : '';
+    const paramtersQuery = parameters.length > 0 ? `&${parameters.join('&')}` : '';
     const response = await fetch(`${pageUrl}${paramtersQuery}`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
       },
     });
-    const peopleList = await response.json();
+    const peopleList: PeopleList = await response.json();
     if (response.ok) {
-      return peopleList;
+      return {
+        ...peopleList,
+        current: pageUrl,
+      };
     }
     throw new Error('Invalid response');
   }
@@ -104,18 +111,25 @@ const peopleSlice = createSlice({
     increasePage(state) {
       state.page += 1;
     },
+    resetPeople: peopleAdapter.removeAll,
+    setSearchTerm(state, { payload }: PayloadAction<string | undefined>) {
+      state.search = payload;
+    },
+    setPage(state, { payload }: PayloadAction<number>) {
+      state.page = payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchPeoplePage.pending, (state) => {
       state.loading = LoadingState.Pending;
     });
     builder.addCase(fetchPeoplePage.fulfilled, (state, { payload }: PayloadAction<PeopleList>) => {
-      const { count, next, previous, results } = payload;
-      peopleAdapter.upsertMany(state, results);
-      state.count = count;
+      peopleAdapter.upsertMany(state, payload.results);
+      state.count = payload.count;
+      state.current = payload.current;
       state.loading = LoadingState.Idle;
-      state.next = next;
-      state.previous = previous;
+      state.next = payload.next;
+      state.previous = payload.previous;
     });
     builder.addCase(fetchPeoplePage.rejected, (state, action) => {
       if (action.payload) {
@@ -129,7 +143,8 @@ const peopleSlice = createSlice({
 });
 export default peopleSlice.reducer;
 
-export const { decreasePage, increasePage } = peopleSlice.actions;
+export const { decreasePage, increasePage, resetPeople, setPage, setSearchTerm } =
+  peopleSlice.actions;
 
 /* Selectors */
 

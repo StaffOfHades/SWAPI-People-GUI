@@ -3,6 +3,7 @@ import React from 'react';
 
 import PeopleList from './features/people/PeopleList';
 import PeoplePaginator from './features/people/PeoplePaginator';
+import PeopleSearchbar from './features/people/PeopleSearchbar';
 import logo from './assets/logo.svg';
 import './App.css';
 
@@ -23,6 +24,7 @@ function Home(): JSX.Element {
 function People(): JSX.Element {
   return (
     <div>
+      <PeopleSearchbar />
       <PeopleList />
       <PeoplePaginator />
     </div>

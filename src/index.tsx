@@ -11,7 +11,7 @@ import reportWebVitals from './reportWebVitals';
 import store from './store';
 import { fetchPeoplePage } from './features/people/peopleSlice';
 
-store.dispatch(fetchPeoplePage({ pageUrl: 'https://swapi.dev/api/people/' }));
+store.dispatch(fetchPeoplePage({ pageUrl: 'https://swapi.dev/api/people/?page=1' }));
 
 ReactDOM.render(
   <React.StrictMode>
