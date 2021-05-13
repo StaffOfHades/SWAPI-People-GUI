@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 import React from 'react';
 
+import PeopleList from './features/people/PeopleList';
 import logo from './assets/logo.svg';
 import './App.css';
 
@@ -18,12 +19,8 @@ function Home(): JSX.Element {
   );
 }
 
-function About(): JSX.Element {
-  return (
-    <div>
-      <h2>About</h2>
-    </div>
-  );
+function People(): JSX.Element {
+  return <PeopleList />;
 }
 
 function Dashboard(): JSX.Element {
@@ -44,7 +41,7 @@ export default function App(): JSX.Element {
               <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="/about">About</Link>
+              <Link to="/people">People</Link>
             </li>
             <li>
               <Link to="/dashboard">Dashboard</Link>
@@ -57,8 +54,8 @@ export default function App(): JSX.Element {
             <Route exact path="/">
               <Home />
             </Route>
-            <Route path="/about">
-              <About />
+            <Route path="/people">
+              <People />
             </Route>
             <Route path="/dashboard">
               <Dashboard />

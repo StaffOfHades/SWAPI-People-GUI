@@ -2,10 +2,17 @@ import {
   PayloadAction,
   createAsyncThunk,
   createEntityAdapter,
+  createSelector,
   createSlice,
 } from '@reduxjs/toolkit';
 
-enum LoadingState {
+import type { RootState } from '../../store';
+
+/* Types */
+
+export const APIPageSize = 10;
+
+export enum LoadingState {
   Idle = 'idle',
   Pending = 'pending',
   Error = 'error',
@@ -38,18 +45,29 @@ export interface PeopleList {
   results: Array<Person>;
 }
 
+interface AdditionalState extends Omit<PeopleList, 'results'> {
+  loading: LoadingState;
+  page: number;
+  perPage: number;
+}
+
+/* Entity Adapter */
+
 const peopleAdapter = createEntityAdapter<Person>({
   selectId: (person) => person.url,
+  sortComparer: (left, right) => left.url.localeCompare(right.url),
 });
 
-const initialState = peopleAdapter.getInitialState<
-  Omit<PeopleList, 'results'> & { loading: LoadingState }
->({
+const initialState = peopleAdapter.getInitialState<AdditionalState>({
   count: 0,
   loading: LoadingState.Idle,
   next: null,
+  page: 1,
+  perPage: 4,
   previous: null,
 });
+
+/* Async Thunks */
 
 export const fetchPeoplePage = createAsyncThunk<PeopleList, { pageUrl: string; search?: string }>(
   'people/fetch',
@@ -71,6 +89,8 @@ export const fetchPeoplePage = createAsyncThunk<PeopleList, { pageUrl: string; s
   }
 );
 
+/* Slice */
+
 const peopleSlice = createSlice({
   initialState,
   name: 'people',
@@ -81,7 +101,7 @@ const peopleSlice = createSlice({
     });
     builder.addCase(fetchPeoplePage.fulfilled, (state, { payload }: PayloadAction<PeopleList>) => {
       const { count, next, previous, results } = payload;
-      peopleAdapter.setAll(state, results);
+      peopleAdapter.upsertMany(state, results);
       state.count = count;
       state.loading = LoadingState.Idle;
       state.next = next;
@@ -98,3 +118,25 @@ const peopleSlice = createSlice({
   },
 });
 export default peopleSlice.reducer;
+
+/* Selectors */
+
+export const { selectAll: selectPeople, selectById: selectPersonById } =
+  peopleAdapter.getSelectors<RootState>((state) => state.people);
+
+export const selectMaxPage = createSelector(
+  (state: RootState) => state.people.count,
+  (state: RootState) => state.people.perPage,
+  (count, perPage) => Math.ceil(count / perPage)
+);
+
+export const selectPeoplePage = createSelector(
+  selectPeople,
+  (state: RootState) => state.people.page,
+  (state: RootState) => state.people.perPage,
+  (people, page, perPage) => {
+    // Make sure we have enough people to return
+    if (page * perPage > people.length) return [];
+    return people.slice(page * perPage, (page + 1) * perPage);
+  }
+);
