@@ -11,7 +11,7 @@ import {
   selectPeopleTotal,
 } from './peopleSlice';
 
-enum PaginatorLinkType {
+export enum PaginatorLinkType {
   Next = 'next',
   Previous = 'previous',
 }
@@ -24,7 +24,7 @@ interface PaginatorLinkProps {
   type: PaginatorLinkType;
 }
 
-const PaginatorLink: FunctionComponent<PaginatorLinkProps> = ({
+export const PaginatorLink: FunctionComponent<PaginatorLinkProps> = ({
   children,
   loading,
   maxPage,
