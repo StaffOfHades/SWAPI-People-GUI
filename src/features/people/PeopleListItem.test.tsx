@@ -23,7 +23,7 @@ describe('People List Item', () => {
     },
   ];
 
-  test('renders person correctly', async () => {
+  test('should render person correctly with its id', () => {
     const modifiedState = peopleAdapter.upsertMany(initialState, people);
     const store = mockStore({ people: modifiedState });
 
@@ -37,7 +37,7 @@ describe('People List Item', () => {
 
     expect(getByText(container, person.name)).toBeInTheDocument();
   });
-  test('renders invalid value for invalid id', async () => {
+  test('should render invalid value for invalid id', () => {
     const store = mockStore({ people: initialState });
 
     const { container } = render(

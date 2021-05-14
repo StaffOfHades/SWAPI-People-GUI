@@ -1,6 +1,6 @@
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
-import { getByText, queryByText } from '@testing-library/dom';
+import { getByText } from '@testing-library/dom';
 import { render } from '@testing-library/react';
 
 import { LoadingState, initialState, peopleAdapter } from './peopleSlice';
@@ -23,7 +23,7 @@ describe('People List', () => {
     },
   ];
 
-  test('renders people correctly', async () => {
+  test('should render people correctly', () => {
     const modifiedState = peopleAdapter.upsertMany(initialState, people);
     const store = mockStore({ people: modifiedState });
 
@@ -37,7 +37,7 @@ describe('People List', () => {
       expect(getByText(container, people[p].name)).toBeInTheDocument();
     }
   });
-  test('renders loading state correctly', async () => {
+  test('should render loading state correctly', () => {
     const modifiedState = peopleAdapter.upsertMany(initialState, people);
     const store = mockStore({ people: { ...modifiedState, loading: LoadingState.Pending } });
 

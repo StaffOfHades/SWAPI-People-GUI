@@ -1,5 +1,5 @@
-import fetchMock from 'fetch-mock-jest';
 import configureStore from 'redux-mock-store';
+import fetchMock from 'fetch-mock-jest';
 import thunkMiddleware from 'redux-thunk';
 
 import reducer, {
