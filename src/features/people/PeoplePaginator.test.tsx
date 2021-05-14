@@ -1,5 +1,5 @@
-import { Provider, connect } from 'react-redux';
 import type { RootState } from '../../store';
+import { Provider, connect } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { getByText, queryByText } from '@testing-library/dom';
 import fetchMock from 'fetch-mock-jest';

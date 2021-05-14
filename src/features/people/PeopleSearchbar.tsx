@@ -29,7 +29,7 @@ export default function PeopleSearchbar(): JSX.Element {
   }
 
   return (
-    <form onSubmit={handleSearch}>
+    <form className="people-searchbar" onSubmit={handleSearch}>
       <input
         disabled={isLoading}
         onChange={({ target: { value } }) => dispatch(setSearchTerm(value))}
