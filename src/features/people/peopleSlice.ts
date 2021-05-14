@@ -55,7 +55,7 @@ interface AdditionalState extends Omit<PeopleList, 'results'> {
 
 /* Entity Adapter */
 
-const peopleAdapter = createEntityAdapter<Person>({
+export const peopleAdapter = createEntityAdapter<Person>({
   selectId: (person) => person.url,
   sortComparer: (left, right) =>
     left.url.length === right.url.length
@@ -63,7 +63,7 @@ const peopleAdapter = createEntityAdapter<Person>({
       : left.url.length - right.url.length,
 });
 
-const initialState = peopleAdapter.getInitialState<AdditionalState>({
+export const initialState = peopleAdapter.getInitialState<AdditionalState>({
   current: '',
   count: 0,
   loading: LoadingState.Idle,
@@ -88,8 +88,8 @@ export const fetchPeoplePage = createAsyncThunk<PeopleList, { pageUrl: string; s
         Accept: 'application/json',
       },
     });
-    const peopleList: PeopleList = await response.json();
     if (response.ok) {
+      const peopleList: PeopleList = await response.json();
       return {
         ...peopleList,
         current: pageUrl,
