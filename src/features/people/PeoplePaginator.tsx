@@ -50,11 +50,12 @@ const PaginatorLink: FunctionComponent<PaginatorLinkProps> = ({
       break;
   }
 
-  if (loading === LoadingState.Pending) {
-    return <li style={{ color: 'gray' }}>...Loading</li>;
-  }
-  if (disabled) {
-    return <li style={{ color: 'gray' }}>{children}</li>;
+  if (loading === LoadingState.Pending || disabled) {
+    return (
+      <button disabled type="button">
+        {loading === LoadingState.Pending ? '...Loading' : children}
+      </button>
+    );
   }
 
   const requestPeoplePage = (): void => {
