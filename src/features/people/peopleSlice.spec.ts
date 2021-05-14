@@ -1,4 +1,3 @@
-import React from 'react';
 import fetchMock from 'fetch-mock-jest';
 import configureStore from 'redux-mock-store';
 import thunkMiddleware from 'redux-thunk';
@@ -7,15 +6,12 @@ import reducer, {
   fetchPeoplePage,
   initialState,
   peopleAdapter,
-  resetPeople,
   selectPeople,
   selectPeoplePage,
   selectPersonById,
   setPage,
   setSearchTerm,
 } from './peopleSlice';
-
-const mockStore = configureStore([thunkMiddleware]);
 
 describe('people slice', () => {
   const people = [
@@ -32,11 +28,6 @@ describe('people slice', () => {
       url: 'http://swapi.dev/api/people/3/',
     },
   ];
-  const entities = people.reduce((entities, person) => {
-    entities[person.url] = person;
-    return entities;
-  }, {} as Record<string, Object>);
-  const ids = people.map((person) => person.url);
   describe('when using reducer', () => {
     test('should return the initial state', () => {
       expect(reducer(undefined, {})).toEqual(initialState);
@@ -51,6 +42,11 @@ describe('people slice', () => {
   describe('when using entity adapter', () => {
     test('should properly set & order people array', () => {
       const modifiedState = peopleAdapter.upsertMany(initialState, people);
+      const entities = people.reduce((entities, person) => {
+        entities[person.url] = person;
+        return entities;
+      }, {} as Record<string, Object>);
+      const ids = people.map((person) => person.url);
       expect(modifiedState.entities).toEqual(entities);
       expect(modifiedState.ids).toEqual(ids);
     });
@@ -73,6 +69,7 @@ describe('people slice', () => {
     });
   });
   describe('when using async thunk', () => {
+    const mockStore = configureStore([thunkMiddleware]);
     const url = 'https://swapi.dev/api/people/?page=1';
     afterEach(() => fetchMock.reset());
     test('should properly handle fetch & set returned data', async () => {
