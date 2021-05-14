@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 
 import type { RootState } from '../../store';
 import { selectPersonById } from './peopleSlice';
+import './PeopleList.scss';
 
 export default function PeopleListItem({ id }: { id: string }): JSX.Element {
   const person = useSelector((state: RootState) => selectPersonById(state, id));

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import type { RootState } from '../../store';
 import { LoadingState, fetchPeoplePage, resetPeople, setPage, setSearchTerm } from './peopleSlice';
+import './PeopleSearchbar.scss';
 
 export default function PeopleSearchbar(): JSX.Element {
   const dispatch = useDispatch();

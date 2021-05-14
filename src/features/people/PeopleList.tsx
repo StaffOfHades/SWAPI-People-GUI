@@ -11,15 +11,23 @@ export default function PeopleList(): JSX.Element {
 
   if (loadingState === LoadingState.Pending) {
     return (
-      <div className="people-list">
-        <div className="loader">...Loading</div>
-      </div>
+      <ul className="people-list">
+        <li className="loader">...Loading</li>
+        <li>&#160;</li>
+        <li>&#160;</li>
+        <li>&#160;</li>
+      </ul>
     );
   }
 
   const renderedPeopleItems = people.map((person) => (
     <PeopleListItem key={person.url} id={person.url} />
   ));
+
+  // To prevent issues where UI moves unexpectedly, always have 4 elements in rendered people items
+  while (renderedPeopleItems.length < 4) {
+    renderedPeopleItems.push(<li>&#160;</li>);
+  }
 
   return <ul className="people-list">{renderedPeopleItems}</ul>;
 }

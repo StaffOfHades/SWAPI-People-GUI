@@ -10,6 +10,7 @@ import {
   selectMaxPage,
   selectPeopleTotal,
 } from './peopleSlice';
+import './PeoplePaginator.scss';
 
 export enum PaginatorLinkType {
   Next = 'next',
@@ -52,9 +53,11 @@ export const PaginatorLink: FunctionComponent<PaginatorLinkProps> = ({
 
   if (loading === LoadingState.Pending || disabled) {
     return (
-      <button disabled type="button">
-        {loading === LoadingState.Pending ? '...Loading' : children}
-      </button>
+      <li>
+        <button disabled type="button">
+          {loading === LoadingState.Pending ? '...Loading' : children}
+        </button>
+      </li>
     );
   }
 

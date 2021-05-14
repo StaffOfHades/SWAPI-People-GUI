@@ -1,0 +1,20 @@
+.people-searchbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  button {
+    padding: 0.25rem 1.25rem;
+    margin: 0.5rem 0.1rem;
+    cursor: pointer;
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+  input {
+    min-width: 10px;
+    padding: 0.25rem;
+    margin: 0.5rem 0.1rem;
+  }
+}
