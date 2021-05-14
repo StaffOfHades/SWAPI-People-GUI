@@ -3,10 +3,10 @@ import configureStore from 'redux-mock-store';
 import { getByText, queryByText } from '@testing-library/dom';
 import { render } from '@testing-library/react';
 
-import PeopleListItem from './PeopleListItem';
-import { initialState, peopleAdapter } from './peopleSlice';
+import { LoadingState, initialState, peopleAdapter } from './peopleSlice';
+import PeopleList from './PeopleList';
 
-describe('People List Item', () => {
+describe('People List', () => {
   const mockStore = configureStore();
   const people = [
     {
@@ -23,31 +23,30 @@ describe('People List Item', () => {
     },
   ];
 
-  test('renders person correctly', async () => {
+  test('renders people correctly', async () => {
     const modifiedState = peopleAdapter.upsertMany(initialState, people);
     const store = mockStore({ people: modifiedState });
 
-    const [person] = people;
-
     const { container } = render(
       <Provider store={store}>
-        <PeopleListItem id={person.url} />
+        <PeopleList />
       </Provider>
     );
 
-    expect(getByText(container, person.name)).toBeInTheDocument();
+    for (let p in people) {
+      expect(getByText(container, people[p].name)).toBeInTheDocument();
+    }
   });
-  test('renders invalid value for invalid id', async () => {
-    const store = mockStore({ people: initialState });
+  test('renders loading state correctly', async () => {
+    const modifiedState = peopleAdapter.upsertMany(initialState, people);
+    const store = mockStore({ people: { ...modifiedState, loading: LoadingState.Pending } });
 
     const { container } = render(
       <Provider store={store}>
-        <PeopleListItem id={'invalid_id'} />
+        <PeopleList />
       </Provider>
     );
 
-    const [person] = people;
-    expect(queryByText(container, person.name)).not.toBeInTheDocument();
-    expect(getByText(container, 'N/A')).toBeInTheDocument();
+    expect(getByText(container, '...Loading')).toBeInTheDocument();
   });
 });

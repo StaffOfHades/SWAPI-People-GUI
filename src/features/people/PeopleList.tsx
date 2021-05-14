@@ -12,7 +12,7 @@ export default function PeopleList(): JSX.Element {
   if (loadingState === LoadingState.Pending) {
     return (
       <div className="people-list">
-        <div className="loader" />
+        <div className="loader">...Loading</div>
       </div>
     );
   }
