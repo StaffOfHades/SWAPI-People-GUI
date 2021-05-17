@@ -24,9 +24,11 @@ export default function PeopleList(): JSX.Element {
     <PeopleListItem key={person.url} id={person.url} />
   ));
 
+  let key = 0;
   // To prevent issues where UI moves unexpectedly, always have 4 elements in rendered people items
   while (renderedPeopleItems.length < 4) {
-    renderedPeopleItems.push(<li>&#160;</li>);
+    renderedPeopleItems.push(<li key={key}>&#160;</li>);
+    key += 1;
   }
 
   return <ul className="people-list">{renderedPeopleItems}</ul>;
