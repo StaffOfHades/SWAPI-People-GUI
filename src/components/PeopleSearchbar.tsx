@@ -1,8 +1,14 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import type { RootState } from '../../store';
-import { LoadingState, fetchPeoplePage, resetPeople, setPage, setSearchTerm } from './peopleSlice';
+import type { RootState } from '../store';
+import {
+  LoadingState,
+  fetchPeoplePage,
+  resetPeople,
+  setPage,
+  setSearchTerm,
+} from '../store/people';
 import './PeopleSearchbar.scss';
 
 export default function PeopleSearchbar(): JSX.Element {

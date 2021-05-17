@@ -1,4 +1,3 @@
-import type { RootState } from '../../store';
 import { Provider, connect } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { getByText, queryByText } from '@testing-library/dom';
@@ -7,6 +6,7 @@ import { render, waitFor } from '@testing-library/react';
 import thunkMiddleware from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
 
+import type { RootState } from '../../store';
 import {
   LoadingState,
   decreasePage,
@@ -18,11 +18,11 @@ import {
   selectMaxPage,
   setPage,
   setSearchTerm,
-} from './peopleSlice';
+} from '../../store/people';
 import PeoplePaginator, {
   PaginatorLink as BasePaginatorLink,
   PaginatorLinkType,
-} from './PeoplePaginator';
+} from '../PeoplePaginator';
 
 function mapStateToProps(state: RootState) {
   return {

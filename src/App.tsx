@@ -2,9 +2,9 @@ import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 import React, { FunctionComponent } from 'react';
 import classNames from 'classnames';
 
-import PeopleList from './features/people/PeopleList';
-import PeoplePaginator from './features/people/PeoplePaginator';
-import PeopleSearchbar from './features/people/PeopleSearchbar';
+import PeopleList from './components/PeopleList';
+import PeoplePaginator from './components/PeoplePaginator';
+import PeopleSearchbar from './components/PeopleSearchbar';
 import './App.scss';
 
 export const People: FunctionComponent<{ className?: string }> = ({ className }): JSX.Element => (

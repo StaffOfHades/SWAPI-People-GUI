@@ -3,8 +3,8 @@ import configureStore from 'redux-mock-store';
 import { getByText } from '@testing-library/dom';
 import { render } from '@testing-library/react';
 
-import App, { People } from './App';
-import { initialState } from './features/people/peopleSlice';
+import App, { People } from '../App';
+import { initialState } from '../store/people';
 
 test('App should render navbar', () => {
   const mockStore = configureStore();

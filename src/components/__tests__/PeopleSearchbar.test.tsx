@@ -13,8 +13,8 @@ import {
   resetPeople,
   setPage,
   setSearchTerm,
-} from './peopleSlice';
-import PeopleSearchbar from './PeopleSearchbar';
+} from '../../store/people';
+import PeopleSearchbar from '../PeopleSearchbar';
 
 describe('People List', () => {
   const search = 'Skywalker';

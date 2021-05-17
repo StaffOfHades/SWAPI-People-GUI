@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import type { RootState } from '../../store';
+import type { RootState } from '../store';
 import {
   LoadingState,
   decreasePage,
@@ -9,7 +9,7 @@ import {
   fetchPeoplePage,
   selectMaxPage,
   selectPeopleTotal,
-} from './peopleSlice';
+} from '../store/people';
 import './PeoplePaginator.scss';
 
 export enum PaginatorLinkType {

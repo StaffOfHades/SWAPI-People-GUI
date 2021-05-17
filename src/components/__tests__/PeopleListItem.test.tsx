@@ -1,12 +1,12 @@
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
-import { getByText } from '@testing-library/dom';
+import { getByText, queryByText } from '@testing-library/dom';
 import { render } from '@testing-library/react';
 
-import { LoadingState, initialState, peopleAdapter } from './peopleSlice';
-import PeopleList from './PeopleList';
+import PeopleListItem from '../PeopleListItem';
+import { initialState, peopleAdapter } from '../../store/people';
 
-describe('People List', () => {
+describe('People List Item', () => {
   const mockStore = configureStore();
   const people = [
     {
@@ -23,30 +23,31 @@ describe('People List', () => {
     },
   ];
 
-  test('should render people correctly', () => {
+  test('should render person correctly with its id', () => {
     const modifiedState = peopleAdapter.upsertMany(initialState, people);
     const store = mockStore({ people: modifiedState });
 
+    const [person] = people;
+
     const { container } = render(
       <Provider store={store}>
-        <PeopleList />
+        <PeopleListItem id={person.url} />
       </Provider>
     );
 
-    for (let p in people) {
-      expect(getByText(container, people[p].name)).toBeInTheDocument();
-    }
+    expect(getByText(container, person.name)).toBeInTheDocument();
   });
-  test('should render loading state correctly', () => {
-    const modifiedState = peopleAdapter.upsertMany(initialState, people);
-    const store = mockStore({ people: { ...modifiedState, loading: LoadingState.Pending } });
+  test('should render invalid value for invalid id', () => {
+    const store = mockStore({ people: initialState });
 
     const { container } = render(
       <Provider store={store}>
-        <PeopleList />
+        <PeopleListItem id={'invalid_id'} />
       </Provider>
     );
 
-    expect(getByText(container, '...Loading')).toBeInTheDocument();
+    const [person] = people;
+    expect(queryByText(container, person.name)).not.toBeInTheDocument();
+    expect(getByText(container, 'N/A')).toBeInTheDocument();
   });
 });

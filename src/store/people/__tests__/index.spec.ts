@@ -11,7 +11,7 @@ import reducer, {
   selectPersonById,
   setPage,
   setSearchTerm,
-} from './peopleSlice';
+} from '../index';
 
 describe('people slice', () => {
   const people = [

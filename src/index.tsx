@@ -9,7 +9,7 @@ import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './store';
-import { fetchPeoplePage } from './features/people/peopleSlice';
+import { fetchPeoplePage } from './store/people';
 
 store.dispatch(fetchPeoplePage({ pageUrl: 'https://swapi.dev/api/people/?page=1' }));
 

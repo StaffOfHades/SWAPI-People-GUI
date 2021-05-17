@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import type { RootState } from '../../store';
-import { LoadingState, selectPeoplePage } from './peopleSlice';
+import type { RootState } from '../store';
+import { LoadingState, selectPeoplePage } from '../store/people';
 import PeopleListItem from './PeopleListItem';
 
 export default function PeopleList(): JSX.Element {
