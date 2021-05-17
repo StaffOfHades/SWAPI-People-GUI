@@ -27,6 +27,12 @@ export function PeopleSearchbar(): JSX.Element {
     dispatch(fetchPeoplePage({ pageUrl: 'https://swapi.dev/api/people/?page=1', search }));
   }
 
+  function handleSearchChange({
+    currentTarget: { value },
+  }: React.FormEvent<HTMLInputElement>): void {
+    dispatch(setSearchTerm(value));
+  }
+
   function handleReset(): void {
     if (canSearch) return;
     dispatch(setPage(1));
@@ -37,11 +43,7 @@ export function PeopleSearchbar(): JSX.Element {
 
   return (
     <form className="people-searchbar" onSubmit={handleSearch}>
-      <input
-        disabled={isLoading}
-        onChange={({ target: { value } }) => dispatch(setSearchTerm(value))}
-        value={search || ''}
-      />
+      <input disabled={isLoading} onChange={handleSearchChange} value={search || ''} />
       <button disabled={canSearch} type="submit">
         Search
       </button>
