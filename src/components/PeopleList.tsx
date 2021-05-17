@@ -3,9 +3,9 @@ import { useSelector } from 'react-redux';
 
 import type { RootState } from '../store';
 import { LoadingState, selectPeoplePage } from '../store/people';
-import PeopleListItem from './PeopleListItem';
+import { PeopleListItem } from './PeopleListItem';
 
-export default function PeopleList(): JSX.Element {
+export function PeopleList(): JSX.Element {
   const loadingState = useSelector((state: RootState) => state.people.loading);
   const people = useSelector(selectPeoplePage);
 
@@ -33,3 +33,5 @@ export default function PeopleList(): JSX.Element {
 
   return <ul className="people-list">{renderedPeopleItems}</ul>;
 }
+
+export default PeopleList;

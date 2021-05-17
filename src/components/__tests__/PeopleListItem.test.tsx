@@ -3,7 +3,7 @@ import configureStore from 'redux-mock-store';
 import { getByText, queryByText } from '@testing-library/dom';
 import { render } from '@testing-library/react';
 
-import PeopleListItem from '../PeopleListItem';
+import { PeopleListItem } from '../PeopleListItem';
 import { initialState, peopleAdapter } from '../../store/people';
 
 describe('People List Item', () => {

@@ -141,10 +141,9 @@ const peopleSlice = createSlice({
     });
   },
 });
-export default peopleSlice.reducer;
-
-export const { decreasePage, increasePage, resetPeople, setPage, setSearchTerm } =
-  peopleSlice.actions;
+export const { actions, reducer } = peopleSlice;
+export const { decreasePage, increasePage, resetPeople, setPage, setSearchTerm } = actions;
+export default reducer;
 
 /* Selectors */
 

@@ -2,10 +2,11 @@ import configureStore from 'redux-mock-store';
 import fetchMock from 'fetch-mock-jest';
 import thunkMiddleware from 'redux-thunk';
 
-import reducer, {
+import {
   fetchPeoplePage,
   initialState,
   peopleAdapter,
+  reducer,
   selectPeople,
   selectPeoplePage,
   selectPersonById,

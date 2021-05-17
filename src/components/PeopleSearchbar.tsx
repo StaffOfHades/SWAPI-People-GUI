@@ -11,7 +11,7 @@ import {
 } from '../store/people';
 import './PeopleSearchbar.scss';
 
-export default function PeopleSearchbar(): JSX.Element {
+export function PeopleSearchbar(): JSX.Element {
   const dispatch = useDispatch();
   const loadingState = useSelector((state: RootState) => state.people.loading);
   const search = useSelector((state: RootState) => state.people.search);
@@ -51,3 +51,5 @@ export default function PeopleSearchbar(): JSX.Element {
     </form>
   );
 }
+
+export default PeopleSearchbar;

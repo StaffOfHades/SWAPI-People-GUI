@@ -19,9 +19,10 @@ import {
   setPage,
   setSearchTerm,
 } from '../../store/people';
-import PeoplePaginator, {
+import {
   PaginatorLink as BasePaginatorLink,
   PaginatorLinkType,
+  PeoplePaginator,
 } from '../PeoplePaginator';
 
 function mapStateToProps(state: RootState) {

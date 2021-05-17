@@ -14,7 +14,7 @@ import {
   setPage,
   setSearchTerm,
 } from '../../store/people';
-import PeopleSearchbar from '../PeopleSearchbar';
+import { PeopleSearchbar } from '../PeopleSearchbar';
 
 describe('People List', () => {
   const search = 'Skywalker';

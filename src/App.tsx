@@ -2,9 +2,9 @@ import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 import React, { FunctionComponent } from 'react';
 import classNames from 'classnames';
 
-import PeopleList from './components/PeopleList';
-import PeoplePaginator from './components/PeoplePaginator';
-import PeopleSearchbar from './components/PeopleSearchbar';
+import { PeopleList } from './components/PeopleList';
+import { PeoplePaginator } from './components/PeoplePaginator';
+import { PeopleSearchbar } from './components/PeopleSearchbar';
 import './App.scss';
 
 export const People: FunctionComponent<{ className?: string }> = ({ className }): JSX.Element => (
@@ -15,7 +15,7 @@ export const People: FunctionComponent<{ className?: string }> = ({ className })
   </div>
 );
 
-export default function App(): JSX.Element {
+export function App(): JSX.Element {
   return (
     <div className="App">
       <Router>
@@ -38,3 +38,5 @@ export default function App(): JSX.Element {
     </div>
   );
 }
+
+export default App;

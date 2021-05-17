@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import peopleSlice from './people';
 
-const store = configureStore({
+export const store = configureStore({
   reducer: {
     people: peopleSlice,
   },

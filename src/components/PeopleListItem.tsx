@@ -5,7 +5,7 @@ import type { RootState } from '../store';
 import { selectPersonById } from '../store/people';
 import './PeopleList.scss';
 
-export default function PeopleListItem({ id }: { id: string }): JSX.Element {
+export function PeopleListItem({ id }: { id: string }): JSX.Element {
   const person = useSelector((state: RootState) => selectPersonById(state, id));
 
   // Verify we have a person to show
@@ -16,3 +16,5 @@ export default function PeopleListItem({ id }: { id: string }): JSX.Element {
 
   return <li>{name}</li>;
 }
+
+export default PeopleListItem;

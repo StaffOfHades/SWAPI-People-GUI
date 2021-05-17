@@ -4,7 +4,7 @@ import { getByText } from '@testing-library/dom';
 import { render } from '@testing-library/react';
 
 import { LoadingState, initialState, peopleAdapter } from '../../store/people';
-import PeopleList from '../PeopleList';
+import { PeopleList } from '../PeopleList';
 
 describe('People List', () => {
   const mockStore = configureStore();

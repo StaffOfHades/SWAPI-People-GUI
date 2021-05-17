@@ -82,7 +82,7 @@ export const PaginatorLink: FunctionComponent<PaginatorLinkProps> = ({
   );
 };
 
-export default function PeoplePaginator(): JSX.Element {
+export function PeoplePaginator(): JSX.Element {
   const loadingState = useSelector((state: RootState) => state.people.loading);
   const nextURL = useSelector((state: RootState) => state.people.next);
   const previousURL = useSelector((state: RootState) => state.people.previous);
@@ -115,3 +115,5 @@ export default function PeoplePaginator(): JSX.Element {
     </ul>
   );
 }
+
+export default PeoplePaginator;
