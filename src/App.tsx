@@ -7,7 +7,11 @@ import { PeoplePaginator } from './components/PeoplePaginator';
 import { PeopleSearchbar } from './components/PeopleSearchbar';
 import './App.scss';
 
-export const People: FunctionComponent<{ className?: string }> = ({ className }): JSX.Element => (
+interface PeopleProps {
+  className?: string;
+}
+
+export const People: FunctionComponent<PeopleProps> = ({ className }): JSX.Element => (
   <div className={classNames('People', className)}>
     <PeopleSearchbar />
     <PeopleList />
