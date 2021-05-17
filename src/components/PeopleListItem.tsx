@@ -1,8 +1,7 @@
 import React, { FunctionComponent } from 'react';
-import { useSelector } from 'react-redux';
 
-import type { RootState } from '../store';
 import { selectPersonById } from '../store/people';
+import { useAppSelector } from '../hooks';
 import './PeopleList.scss';
 
 interface PeopleListItemProps {
@@ -10,7 +9,7 @@ interface PeopleListItemProps {
 }
 
 export const PeopleListItem: FunctionComponent<PeopleListItemProps> = ({ id }) => {
-  const person = useSelector((state: RootState) => selectPersonById(state, id));
+  const person = useAppSelector((state) => selectPersonById(state, id));
 
   // Verify we have a person to show
   if (person === undefined) {

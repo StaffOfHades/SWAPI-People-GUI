@@ -1,7 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
-import type { RootState } from '../store';
 import {
   LoadingState,
   decreasePage,
@@ -10,6 +8,7 @@ import {
   selectMaxPage,
   selectPeopleTotal,
 } from '../store/people';
+import { useAppDispatch, useAppSelector } from '../hooks';
 import './PeoplePaginator.scss';
 
 export enum PaginatorLinkType {
@@ -33,11 +32,11 @@ export const PaginatorLink: FunctionComponent<PaginatorLinkProps> = ({
   pageUrl,
   type,
 }) => {
-  const count = useSelector((state: RootState) => state.people.count);
-  const dispatch = useDispatch();
-  const perPage = useSelector((state: RootState) => state.people.perPage);
-  const peopleTotal = useSelector(selectPeopleTotal);
-  const search = useSelector((state: RootState) => state.people.search);
+  const count = useAppSelector((state) => state.people.count);
+  const dispatch = useAppDispatch();
+  const perPage = useAppSelector((state) => state.people.perPage);
+  const peopleTotal = useAppSelector(selectPeopleTotal);
+  const search = useAppSelector((state) => state.people.search);
 
   let disabled = false;
   switch (type) {
@@ -83,11 +82,11 @@ export const PaginatorLink: FunctionComponent<PaginatorLinkProps> = ({
 };
 
 export function PeoplePaginator(): JSX.Element {
-  const loadingState = useSelector((state: RootState) => state.people.loading);
-  const nextURL = useSelector((state: RootState) => state.people.next);
-  const previousURL = useSelector((state: RootState) => state.people.previous);
-  const currentPage = useSelector((state: RootState) => state.people.page);
-  const maxPage = useSelector(selectMaxPage);
+  const loadingState = useAppSelector((state) => state.people.loading);
+  const nextURL = useAppSelector((state) => state.people.next);
+  const previousURL = useAppSelector((state) => state.people.previous);
+  const currentPage = useAppSelector((state) => state.people.page);
+  const maxPage = useAppSelector(selectMaxPage);
 
   return (
     <ul className="people-paginator">

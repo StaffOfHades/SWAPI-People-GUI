@@ -1,7 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
-import type { RootState } from '../store';
 import {
   LoadingState,
   fetchPeoplePage,
@@ -9,12 +7,13 @@ import {
   setPage,
   setSearchTerm,
 } from '../store/people';
+import { useAppDispatch, useAppSelector } from '../hooks';
 import './PeopleSearchbar.scss';
 
 export function PeopleSearchbar(): JSX.Element {
-  const dispatch = useDispatch();
-  const loadingState = useSelector((state: RootState) => state.people.loading);
-  const search = useSelector((state: RootState) => state.people.search);
+  const dispatch = useAppDispatch();
+  const loadingState = useAppSelector((state) => state.people.loading);
+  const search = useAppSelector((state) => state.people.search);
 
   const isLoading = loadingState === LoadingState.Pending;
   const canSearch = isLoading || (search ?? '').trim().length === 0;
