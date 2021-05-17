@@ -18,6 +18,11 @@ export enum LoadingState {
   Error = 'error',
 }
 
+interface FetchPeopleOptions {
+  pageUrl: string;
+  search?: string;
+}
+
 export interface Person {
   /* eslint-disable camelcase */
   birth_year: string;
@@ -50,7 +55,7 @@ interface AdditionalState extends Omit<PeopleList, 'results'> {
   loading: LoadingState;
   page: number;
   perPage: number;
-  search?: string;
+  search: string;
 }
 
 /* Entity Adapter */
@@ -71,16 +76,16 @@ export const initialState = peopleAdapter.getInitialState<AdditionalState>({
   page: 1,
   perPage: 4,
   previous: null,
-  search: undefined,
+  search: '',
 });
 
 /* Async Thunks */
 
-export const fetchPeoplePage = createAsyncThunk<PeopleList, { pageUrl: string; search?: string }>(
+export const fetchPeoplePage = createAsyncThunk<PeopleList, FetchPeopleOptions>(
   'people/fetch',
   async ({ pageUrl, search }) => {
     const parameters: Array<string> = [];
-    if (search !== undefined) parameters.push(`search=${search}`);
+    if (search !== undefined && search.trim().length > 0) parameters.push(`search=${search}`);
     const paramtersQuery = parameters.length > 0 ? `&${parameters.join('&')}` : '';
     const response = await fetch(`${pageUrl}${paramtersQuery}`, {
       method: 'GET',
@@ -112,7 +117,7 @@ const peopleSlice = createSlice({
       state.page += 1;
     },
     resetPeople: peopleAdapter.removeAll,
-    setSearchTerm(state, { payload }: PayloadAction<string | undefined>) {
+    setSearchTerm(state, { payload }: PayloadAction<string>) {
       state.search = payload;
     },
     setPage(state, { payload }: PayloadAction<number>) {

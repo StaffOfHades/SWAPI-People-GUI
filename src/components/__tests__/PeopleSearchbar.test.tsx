@@ -134,7 +134,7 @@ describe('People List', () => {
       expect(actions).toMatchObject([
         setPage(1),
         resetPeople(),
-        setSearchTerm(undefined),
+        setSearchTerm(''),
         pendingFetchPeoplePage,
         fulfilledFetchPeoplePage,
       ]);

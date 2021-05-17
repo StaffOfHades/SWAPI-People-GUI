@@ -37,13 +37,13 @@ export function PeopleSearchbar(): JSX.Element {
     if (canSearch) return;
     dispatch(setPage(1));
     dispatch(resetPeople());
-    dispatch(setSearchTerm(undefined));
+    dispatch(setSearchTerm(''));
     dispatch(fetchPeoplePage({ pageUrl: 'https://swapi.dev/api/people/?page=1' }));
   }
 
   return (
     <form className="people-searchbar" onSubmit={handleSearch}>
-      <input disabled={isLoading} onChange={handleSearchChange} value={search || ''} />
+      <input disabled={isLoading} onChange={handleSearchChange} value={search} />
       <button disabled={canSearch} type="submit">
         Search
       </button>
