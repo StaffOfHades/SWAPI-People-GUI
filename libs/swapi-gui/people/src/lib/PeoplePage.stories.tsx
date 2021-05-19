@@ -21,7 +21,7 @@ import { RootState, usePeopleDispatch, usePeopleSelector } from './hooks';
 const peopleSliceAction = action('People Slice');
 const pageUrl = 'https://swapi.dev/api/people/?page=1';
 
-const storyboardActionLogger: Middleware<{}, RootState> = (storeApi) => (next) => (action) => {
+const storyboardActionLogger: Middleware<unknown, RootState> = (storeApi) => (next) => (action) => {
   peopleSliceAction(action);
   return next(action);
 };
@@ -46,7 +46,7 @@ export default {
   title: 'PeoplePage',
 };
 
-export const primary = () => {
+export const Primary = () => {
   const dispatch = usePeopleDispatch();
   const isLoading = boolean('Loading', initialPeopleState.loading === LoadingState.Pending);
   const peopleNames = array('People', ['Luke Skywalker', 'C-3PO', 'R2-D2']);
@@ -55,11 +55,11 @@ export const primary = () => {
 
   useEffect(() => {
     dispatch(setLoading(isLoading ? LoadingState.Pending : LoadingState.Idle));
-  }, [isLoading]);
+  }, [dispatch, isLoading]);
 
   useEffect(() => {
     dispatch(setPerPage(perPage));
-  }, [perPage]);
+  }, [dispatch, perPage]);
 
   useEffect(() => {
     let people = peopleNames.map((name, index) => ({
@@ -79,7 +79,7 @@ export const primary = () => {
     dispatch(fetchPeoplePage.fulfilled(response, undefined, { page: pageUrl, search }));
     fetchMock.mock(`begin:${pageUrl}`, response);
     return fetchMock.reset;
-  }, [peopleNames, search]);
+  }, [dispatch, peopleNames, search]);
 
   return <PeoplePage />;
 };

@@ -33,7 +33,7 @@ describe('PeopleList', () => {
       </Provider>
     );
 
-    for (let p in people) {
+    for (const p in people) {
       expect(getByText(container, people[p].name)).toBeInTheDocument();
     }
   });

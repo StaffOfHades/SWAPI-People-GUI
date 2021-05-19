@@ -25,7 +25,7 @@ export default {
   title: 'PeopleSearchbar',
 };
 
-export const primary = () => {
+export const Primary = () => {
   const isLoading = boolean('Loading', initialPeopleState.loading === LoadingState.Pending);
   const [search, setSearch] = useState(initialPeopleState.search);
   const peopleNames = array('People', ['Luke Skywalker', 'C-3PO', 'R2-D2']);
@@ -56,7 +56,7 @@ export const primary = () => {
 
   useEffect(() => {
     return unsubscribe;
-  }, []);
+  }, [unsubscribe]);
 
   useEffect(() => {
     const filteredPeople = people.filter((person) => person.name.includes(search));

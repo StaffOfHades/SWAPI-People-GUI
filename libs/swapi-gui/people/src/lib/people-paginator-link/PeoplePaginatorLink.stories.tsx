@@ -50,7 +50,7 @@ export default {
   title: 'PeoplePaginatorLink',
 };
 
-export const previous = () => {
+export const Previous = () => {
   const isLoading = boolean('Loading', initialPeopleState.loading === LoadingState.Pending);
   const label = text('Label', 'Previous');
   const page = number('Page', initialPeopleState.page);
@@ -75,7 +75,7 @@ export const previous = () => {
 
   useEffect(() => {
     return unsubscribe;
-  }, []);
+  }, [unsubscribe]);
 
   useEffect(() => {
     fetchMock.mock(`begin:${pageUrl}`, {
@@ -97,7 +97,7 @@ export const previous = () => {
   );
 };
 
-export const next = () => {
+export const Next = () => {
   const isLoading = boolean('Loading', initialPeopleState.loading === LoadingState.Pending);
   const label = text('Label', 'Next');
 

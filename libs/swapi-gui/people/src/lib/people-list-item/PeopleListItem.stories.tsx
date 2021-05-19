@@ -22,7 +22,7 @@ export default {
   title: 'PeopleListItem',
 };
 
-export const primary = () => {
+export const Primary = () => {
   const person = { name: text('Name', 'Luke Skywalker'), url: 'http://swapi.dev/api/people/1/' };
   const modifiedState = peopleAdapter.addOne(initialPeopleState, person);
   const store = mockStore({ [PeopleFeatureKey]: modifiedState });

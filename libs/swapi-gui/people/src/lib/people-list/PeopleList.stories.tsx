@@ -14,7 +14,7 @@ export default {
   title: 'PeopleList',
 };
 
-export const primary = () => {
+export const Primary = () => {
   const isLoading = boolean('Loading', initialPeopleState.loading === LoadingState.Pending);
   const perPage = number('Per Page', initialPeopleState.perPage);
   const peopleNames = array('People', ['Luke Skywalker', 'C-3PO', 'R2-D2']);

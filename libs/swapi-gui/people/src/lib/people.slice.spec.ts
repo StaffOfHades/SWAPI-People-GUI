@@ -53,7 +53,7 @@ describe('people slice', () => {
       const entities = people.reduce((entities, person) => {
         entities[person.url] = person;
         return entities;
-      }, {} as Record<string, Object>);
+      }, {} as Record<string, unknown>);
       const ids = people.map((person) => person.url);
       expect(modifiedState.entities).toEqual(entities);
       expect(modifiedState.ids).toEqual(ids);

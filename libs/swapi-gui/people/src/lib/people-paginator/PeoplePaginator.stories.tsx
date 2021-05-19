@@ -25,7 +25,7 @@ export default {
   title: 'PeoplePaginator',
 };
 
-export const primary = () => {
+export const Primary = () => {
   const count = number('Count', initialPeopleState.count);
   const isLoading = boolean('Loading', initialPeopleState.loading === LoadingState.Pending);
   const [page, setPage] = useState(initialPeopleState.page);
@@ -56,7 +56,7 @@ export const primary = () => {
 
   useEffect(() => {
     return unsubscribe;
-  }, []);
+  }, [unsubscribe]);
 
   useEffect(() => {
     fetchMock.mock(`begin:${pageUrl}`, {
