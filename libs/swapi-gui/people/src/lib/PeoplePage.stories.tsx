@@ -16,7 +16,7 @@ import {
   setPerPage,
 } from './people.slice';
 import { PeoplePage } from './PeoplePage';
-import { RootState, useAppDispatch, useAppSelector } from './hooks';
+import { RootState, usePeopleDispatch, usePeopleSelector } from './hooks';
 
 const peopleSliceAction = action('People Slice');
 const pageUrl = 'https://swapi.dev/api/people/?page=1';
@@ -47,11 +47,11 @@ export default {
 };
 
 export const primary = () => {
-  const dispatch = useAppDispatch();
+  const dispatch = usePeopleDispatch();
   const isLoading = boolean('Loading', initialPeopleState.loading === LoadingState.Pending);
   const peopleNames = array('People', ['Luke Skywalker', 'C-3PO', 'R2-D2']);
   const perPage = number('Per Page', initialPeopleState.perPage);
-  const search = useAppSelector((state) => state[PeopleFeatureKey].search);
+  const search = usePeopleSelector((state) => state[PeopleFeatureKey].search);
 
   useEffect(() => {
     dispatch(setLoading(isLoading ? LoadingState.Pending : LoadingState.Idle));

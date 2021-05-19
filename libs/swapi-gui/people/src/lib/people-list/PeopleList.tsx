@@ -3,12 +3,12 @@ import React from 'react';
 import { LoadingState, PeopleFeatureKey, selectPeoplePage } from '../people.slice';
 import { PeopleListItem } from '../people-list-item';
 import styles from './PeopleList.module.scss';
-import { useAppSelector } from '../hooks';
+import { usePeopleSelector } from '../hooks';
 
 export function PeopleList(): JSX.Element {
-  const loadingState = useAppSelector((state) => state[PeopleFeatureKey].loading);
-  const people = useAppSelector(selectPeoplePage);
-  const perPage = useAppSelector((state) => state[PeopleFeatureKey].perPage);
+  const loadingState = usePeopleSelector((state) => state[PeopleFeatureKey].loading);
+  const people = usePeopleSelector(selectPeoplePage);
+  const perPage = usePeopleSelector((state) => state[PeopleFeatureKey].perPage);
 
   if (loadingState === LoadingState.Pending) {
     const spacers: Array<JSX.Element> = [];

@@ -8,7 +8,7 @@ import {
   fetchPeoplePage,
   selectPeopleTotal,
 } from '../people.slice';
-import { useAppDispatch, useAppSelector } from '../hooks';
+import { usePeopleDispatch, usePeopleSelector } from '../hooks';
 import './PeoplePaginatorLink.module.scss';
 
 export enum PeoplePaginatorLinkType {
@@ -32,11 +32,11 @@ export const PeoplePaginatorLink: FunctionComponent<PeoplePaginatorLinkProps> = 
   pageUrl,
   type,
 }) => {
-  const count = useAppSelector((state) => state[PeopleFeatureKey].count);
-  const dispatch = useAppDispatch();
-  const perPage = useAppSelector((state) => state[PeopleFeatureKey].perPage);
-  const peopleTotal = useAppSelector(selectPeopleTotal);
-  const search = useAppSelector((state) => state[PeopleFeatureKey].search);
+  const count = usePeopleSelector((state) => state[PeopleFeatureKey].count);
+  const dispatch = usePeopleDispatch();
+  const perPage = usePeopleSelector((state) => state[PeopleFeatureKey].perPage);
+  const peopleTotal = usePeopleSelector(selectPeopleTotal);
+  const search = usePeopleSelector((state) => state[PeopleFeatureKey].search);
 
   let disabled = false;
   switch (type) {

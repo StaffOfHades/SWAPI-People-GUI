@@ -9,12 +9,12 @@ import {
   setSearchTerm,
 } from '../people.slice';
 import styles from './PeopleSearchbar.module.scss';
-import { useAppDispatch, useAppSelector } from '../hooks';
+import { usePeopleDispatch, usePeopleSelector } from '../hooks';
 
 export function PeopleSearchbar(): JSX.Element {
-  const dispatch = useAppDispatch();
-  const loadingState = useAppSelector((state) => state[PeopleFeatureKey].loading);
-  const search = useAppSelector((state) => state[PeopleFeatureKey].search);
+  const dispatch = usePeopleDispatch();
+  const loadingState = usePeopleSelector((state) => state[PeopleFeatureKey].loading);
+  const search = usePeopleSelector((state) => state[PeopleFeatureKey].search);
 
   const isLoading = loadingState === LoadingState.Pending;
   const canSearch = isLoading || (search ?? '').trim().length === 0;
