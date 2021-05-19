@@ -50,9 +50,14 @@
     "@nrwl/jest": "12.3.3",
     "@nrwl/linter": "12.3.3",
     "@nrwl/react": "12.3.3",
+    "@nrwl/storybook": "^12.3.3",
     "@nrwl/tao": "12.3.3",
     "@nrwl/web": "12.3.3",
     "@nrwl/workspace": "12.3.3",
+    "@storybook/addon-actions": "^6.2.9",
+    "@storybook/addon-knobs": "^6.2.7",
+    "@storybook/react": "^6.2.7",
+    "@svgr/webpack": "^5.4.0",
     "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/react": "11.2.6",
     "@testing-library/user-event": "^13.1.9",
@@ -64,6 +69,7 @@
     "@typescript-eslint/eslint-plugin": "4.19.0",
     "@typescript-eslint/parser": "4.19.0",
     "babel-jest": "26.2.2",
+    "babel-loader": "8.1.0",
     "cypress": "^6.0.1",
     "dotenv": "8.2.0",
     "eslint": "7.22.0",
@@ -75,11 +81,13 @@
     "eslint-plugin-react-hooks": "4.2.0",
     "fetch-mock-jest": "^1.5.1",
     "jest": "26.2.2",
+    "msw": "^0.28.2",
     "node-fetch": "^2.6.1",
     "prettier": "2.2.1",
     "redux-mock-store": "^1.5.4",
     "ts-jest": "26.5.5",
     "ts-node": "~9.1.1",
-    "typescript": "~4.2.4"
+    "typescript": "~4.2.4",
+    "url-loader": "^3.0.0"
   }
 }

@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
+import { PeoplePage } from '@teachable/swapi-gui/people';
 import React from 'react';
 
-import { PeoplePage } from '../components/people-page/';
 import styles from './App.module.scss';
 
 export function App(): JSX.Element {
