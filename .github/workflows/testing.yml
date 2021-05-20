@@ -20,7 +20,7 @@ on:
 jobs:
   # This workflow contains an initial setup to checkout the project & get node ready
   testing:
-     # The type of runner that the job will run on
+    # The type of runner that the job will run on
     runs-on: self-hosted
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -37,5 +37,8 @@ jobs:
       # Gets project dependencies
       - run: npm ci
 
-      # Tests api
-      - run: npm test
+      # Runs units tests
+      - run: npx --yes nx affected:test
+
+      # Runs 2e2 tests
+      - run: npx --yes nx affected:e2e
