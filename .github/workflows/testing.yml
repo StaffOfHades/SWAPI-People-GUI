@@ -26,11 +26,15 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - name: Retrivies repository from remote server
+        uses: actions/checkout@v2
+
+      - name: Injects slug/short variables
+        uses: rlespinasse/github-slug-action@2.2.0
 
       # Gets branch name
       - name: Branch name
-        run: echo running on branch ${GITHUB_REF##*/}
+        run: echo $GITHUB_REF_SLUG
 
       # Sets-up node-js environment
       - name: Use Node.js 14
@@ -42,7 +46,7 @@ jobs:
       - run: npm ci
 
       # Runs units tests
-      - run: npx nx affected:test --base ${GITHUB_REF##*/}
+      - run: npx nx affected:test --base "${GITHUB_REF_SLUG}"
 
       # Runs 2e2 tests
-      - run: npx nx affected:e2e --base ${GITHUB_REF##*/}
+      - run: npx nx affected:e2e --base "${GITHUB_REF_SLUG}"
