@@ -1,9 +1,9 @@
+import { Meta, Story } from '@storybook/react';
 import { Middleware } from 'redux';
 import { Provider } from 'react-redux';
 import React, { useEffect, useState } from 'react';
 import { action } from '@storybook/addon-actions';
 import { configureStore } from '@reduxjs/toolkit';
-import { array, boolean, number, withKnobs } from '@storybook/addon-knobs';
 import fetchMock from 'fetch-mock';
 
 import {
@@ -41,18 +41,26 @@ export default {
         <Story />
       </Provider>
     ),
-    withKnobs,
   ],
   title: 'PeoplePage',
-};
+} as Meta;
 
-export const Primary = () => {
+interface PeoplePageStoryProps {
+  loading: boolean;
+  perPage: number;
+  peopleNames: Array<string>;
+}
+
+const PeoplePageStory: Story<PeoplePageStoryProps> = ({
+  children,
+  loading: isLoading,
+  perPage,
+  peopleNames,
+  ...args
+}) => {
   const count = usePeopleSelector((state) => state[PeopleFeatureKey].count);
   const dispatch = usePeopleDispatch();
-  const isLoading = boolean('Loading', initialPeopleState.loading === LoadingState.Pending);
   const [people, setPeople] = useState([]);
-  const peopleNames = array('People', ['Luke Skywalker', 'C-3PO', 'R2-D2']);
-  const perPage = number('Per Page', initialPeopleState.perPage);
   const search = usePeopleSelector((state) => state[PeopleFeatureKey].search);
 
   useEffect(() => {
@@ -117,5 +125,29 @@ export const Primary = () => {
     }
   }, [count, dispatch, people, search]);
 
-  return <PeoplePage />;
+  return <PeoplePage {...args} />;
 };
+
+export const Primary = PeoplePageStory.bind({});
+Primary.argTypes = {
+  loading: {
+    description: 'Whether the component is in a loading state',
+    control: { type: 'boolean' },
+    name: 'Loading',
+  },
+  perPage: {
+    description: 'The number of people to show per page',
+    control: { type: 'number', min: 1 },
+    name: 'Per Page',
+  },
+  peopleNames: {
+    description: 'The names of the people to show',
+    control: { type: 'object' },
+    name: 'People',
+  },
+};
+Primary.args = {
+  loading: initialPeopleState.loading === LoadingState.Pending,
+  perPage: initialPeopleState.perPage,
+  peopleNames: ['Luke Skywalker', 'C-3PO', 'R2-D2'],
+} as PeoplePageStoryProps;

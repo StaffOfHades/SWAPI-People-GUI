@@ -1,7 +1,7 @@
+import { Meta, Story } from '@storybook/react';
 import { Provider, connect } from 'react-redux';
 import React, { useEffect, useState } from 'react';
 import { action } from '@storybook/addon-actions';
-import { boolean, number, text, withKnobs } from '@storybook/addon-knobs';
 import configureStore from 'redux-mock-store';
 import fetchMock from 'fetch-mock';
 import thunkMiddleware from 'redux-thunk';
@@ -45,16 +45,24 @@ export default {
         <Story />
       </ul>
     ),
-    withKnobs,
   ],
   title: 'PeoplePaginatorLink',
-};
+} as Meta;
 
-export const Previous = () => {
-  const isLoading = boolean('Loading', initialPeopleState.loading === LoadingState.Pending);
-  const label = text('Label', 'Previous');
-  const page = number('Page', initialPeopleState.page);
+interface PeoplePaginatorLinkStoryProps {
+  loading: boolean;
+  label: string;
+  type?: PeoplePaginatorLinkType;
+}
 
+const PeoplePaginatorLinkStory: Story<PeoplePaginatorLinkStoryProps> = ({
+  children,
+  label,
+  loading: isLoading,
+  page,
+  type,
+  ...args
+}) => {
   const loading = isLoading ? LoadingState.Pending : LoadingState.Idle;
 
   const store = mockStore({
@@ -63,6 +71,7 @@ export const Previous = () => {
       count,
       current: pageUrl,
       loading,
+      next: pageUrl,
       previous: pageUrl,
       page,
     },
@@ -81,7 +90,7 @@ export const Previous = () => {
     fetchMock.mock(`begin:${pageUrl}`, {
       count,
       current: pageUrl,
-      next: null,
+      next: pageUrl,
       previous: pageUrl,
       results: [],
     });
@@ -90,50 +99,82 @@ export const Previous = () => {
 
   return (
     <Provider store={store}>
-      <PeoplePaginatorLink pageUrl={pageUrl} type={PeoplePaginatorLinkType.Previous}>
+      <PeoplePaginatorLink pageUrl={pageUrl} type={type} {...args}>
         {label}
       </PeoplePaginatorLink>
     </Provider>
   );
 };
 
-export const Next = () => {
-  const isLoading = boolean('Loading', initialPeopleState.loading === LoadingState.Pending);
-  const label = text('Label', 'Next');
+const Primary = PeoplePaginatorLinkStory.bind({});
+Primary.argTypes = {
+  label: {
+    description: 'The text contents of the button',
+    control: { type: 'text' },
+    name: 'Label',
+  },
+  loading: {
+    description: 'Whether the component is in a loading state',
+    control: { type: 'boolean' },
+    name: 'Loading',
+  },
+  page: {
+    description: 'The current internal page number',
+    control: { type: 'number', min: 1 },
+    name: 'Page',
+  },
+  type: {
+    description: 'The link type',
+    control: { type: 'select' },
+    options: Object.values(PeoplePaginatorLinkType),
+    name: 'Type',
+  },
+};
+Primary.args = {
+  label: 'Link',
+  loading: initialPeopleState.loading === LoadingState.Pending,
+  page: initialPeopleState.page,
+  type: undefined,
+} as PeoplePaginatorLinkStoryProps;
 
-  const loading = isLoading ? LoadingState.Pending : LoadingState.Idle;
-
-  const store = mockStore({
-    [PeopleFeatureKey]: {
-      ...initialPeopleState,
-      count,
-      current: pageUrl,
-      loading,
-      next: pageUrl,
+export const Previous = PeoplePaginatorLinkStory.bind({});
+Previous.argTypes = {
+  ...Primary.argTypes,
+  type: {
+    ...Primary.argTypes.type,
+    control: false,
+    table: {
+      disable: true,
     },
-  });
-
-  store.subscribe(() => {
-    const action = store.getActions().slice(-1)[0];
-    peopleSliceAction(action);
-  });
-
-  useEffect(() => {
-    fetchMock.mock(`begin:${pageUrl}`, {
-      count,
-      current: pageUrl,
-      next: pageUrl,
-      previous: null,
-      results: [],
-    });
-    return fetchMock.reset;
-  }, []);
-
-  return (
-    <Provider store={store}>
-      <PeoplePaginatorLink pageUrl={pageUrl} type={PeoplePaginatorLinkType.Next}>
-        {label}
-      </PeoplePaginatorLink>
-    </Provider>
-  );
+  },
 };
+Previous.args = {
+  ...Primary.args,
+  page: 2,
+  label: 'Previous',
+  type: PeoplePaginatorLinkType.Previous,
+} as PeoplePaginatorLinkStoryProps;
+
+export const Next = PeoplePaginatorLinkStory.bind({});
+Next.argTypes = {
+  ...Primary.argTypes,
+  page: {
+    ...Primary.argTypes.page,
+    control: false,
+    table: {
+      disable: true,
+    },
+  },
+  type: {
+    ...Primary.argTypes.type,
+    control: false,
+    table: {
+      disable: true,
+    },
+  },
+};
+Next.args = {
+  ...Primary.args,
+  label: 'Next',
+  type: PeoplePaginatorLinkType.Next,
+} as PeoplePaginatorLinkStoryProps;

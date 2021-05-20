@@ -1,7 +1,7 @@
+import { Meta, Story } from '@storybook/react';
 import { Provider } from 'react-redux';
 import React, { useEffect, useState } from 'react';
 import { action } from '@storybook/addon-actions';
-import { boolean, number, withKnobs } from '@storybook/addon-knobs';
 import configureStore from 'redux-mock-store';
 import fetchMock from 'fetch-mock';
 import thunkMiddleware from 'redux-thunk';
@@ -21,15 +21,22 @@ const peopleSliceAction = action('People Slice');
 
 export default {
   component: PeoplePaginator,
-  decorators: [withKnobs],
   title: 'PeoplePaginator',
-};
+} as Meta;
 
-export const Primary = () => {
-  const count = number('Count', initialPeopleState.count);
-  const isLoading = boolean('Loading', initialPeopleState.loading === LoadingState.Pending);
+interface PeoplePaginatorStoryProps {
+  count: number;
+  loadine: number;
+}
+
+const PeoplePaginatorStory: Story<PeoplePaginatorStoryProps> = ({
+  children,
+  count,
+  loading: isLoading,
+  perPage,
+  ...args
+}) => {
   const [page, setPage] = useState(initialPeopleState.page);
-  const perPage = number('Per Page', initialPeopleState.perPage);
 
   const loading = isLoading ? LoadingState.Pending : LoadingState.Idle;
 
@@ -71,7 +78,31 @@ export const Primary = () => {
 
   return (
     <Provider store={store}>
-      <PeoplePaginator />
+      <PeoplePaginator {...args} />
     </Provider>
   );
 };
+
+export const Primary = PeoplePaginatorStory.bind({});
+Primary.argTypes = {
+  count: {
+    description: 'The number of people in total',
+    control: { type: 'number', min: 1 },
+    name: 'Count',
+  },
+  loading: {
+    description: 'Whether the component is in a loading state',
+    control: { type: 'boolean' },
+    name: 'Loading',
+  },
+  perPage: {
+    description: 'The number of people to show per page',
+    control: { type: 'number', min: 1 },
+    name: 'Per Page',
+  },
+};
+Primary.args = {
+  count: initialPeopleState.perPage,
+  loading: initialPeopleState.loading === LoadingState.Pending,
+  perPage: initialPeopleState.perPage,
+} as PeoplePaginatorStoryProps;

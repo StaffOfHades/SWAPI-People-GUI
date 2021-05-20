@@ -1,7 +1,7 @@
+import { Meta, Story } from '@storybook/react';
 import { Provider } from 'react-redux';
 import React, { useEffect, useState } from 'react';
 import { action } from '@storybook/addon-actions';
-import { array, boolean, withKnobs } from '@storybook/addon-knobs';
 import configureStore from 'redux-mock-store';
 import fetchMock from 'fetch-mock';
 import thunkMiddleware from 'redux-thunk';
@@ -21,14 +21,21 @@ const peopleSliceAction = action('People Slice');
 
 export default {
   component: PeopleSearchbar,
-  decorators: [withKnobs],
   title: 'PeopleSearchbar',
-};
+} as Meta;
 
-export const Primary = () => {
-  const isLoading = boolean('Loading', initialPeopleState.loading === LoadingState.Pending);
+interface PeopleSearchbarStoryProps {
+  loading: boolean;
+  peopleNames: Array<string>;
+}
+
+const PeopleSearchbarStory: Story<PeopleSearchbarStoryProps> = ({
+  children,
+  loading: isLoading,
+  peopleNames,
+  ...args
+}) => {
   const [search, setSearch] = useState(initialPeopleState.search);
-  const peopleNames = array('People', ['Luke Skywalker', 'C-3PO', 'R2-D2']);
 
   const loading = isLoading ? LoadingState.Pending : LoadingState.Idle;
   const people = peopleNames.map((name, index) => ({
@@ -72,7 +79,25 @@ export const Primary = () => {
 
   return (
     <Provider store={store}>
-      <PeopleSearchbar />
+      <PeopleSearchbar {...args} />
     </Provider>
   );
 };
+
+export const Primary = PeopleSearchbarStory.bind({});
+Primary.argTypes = {
+  loading: {
+    description: 'Whether the component is in a loading state',
+    control: { type: 'boolean' },
+    name: 'Loading',
+  },
+  peopleNames: {
+    description: 'The names of the people to show',
+    control: { type: 'object' },
+    name: 'People',
+  },
+};
+Primary.args = {
+  loading: initialPeopleState.loading === LoadingState.Pending,
+  peopleNames: ['Luke Skywalker', 'C-3PO', 'R2-D2'],
+} as PeopleSearchbarStoryProps;

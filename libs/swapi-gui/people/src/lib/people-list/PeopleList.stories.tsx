@@ -1,6 +1,6 @@
+import { Meta, Story } from '@storybook/react';
 import { Provider } from 'react-redux';
 import React from 'react';
-import { array, boolean, number, withKnobs } from '@storybook/addon-knobs';
 import configureStore from 'redux-mock-store';
 
 import { LoadingState, PeopleFeatureKey, initialPeopleState, peopleAdapter } from '../people.slice';
@@ -10,15 +10,22 @@ const mockStore = configureStore();
 
 export default {
   component: PeopleList,
-  decorators: [withKnobs],
   title: 'PeopleList',
-};
+} as Meta;
 
-export const Primary = () => {
-  const isLoading = boolean('Loading', initialPeopleState.loading === LoadingState.Pending);
-  const perPage = number('Per Page', initialPeopleState.perPage);
-  const peopleNames = array('People', ['Luke Skywalker', 'C-3PO', 'R2-D2']);
+interface PeopleListStoryProps {
+  loading: boolean;
+  perPage: number;
+  peopleNames: Array<string>;
+}
 
+const PeopleListStory: Story<PeopleListStoryProps> = ({
+  children,
+  loading: isLoading,
+  perPage,
+  peopleNames,
+  ...args
+}) => {
   const loading = isLoading ? LoadingState.Pending : LoadingState.Idle;
   const people = peopleNames.map((name, index) => ({
     name,
@@ -31,7 +38,31 @@ export const Primary = () => {
 
   return (
     <Provider store={store}>
-      <PeopleList />
+      <PeopleList {...args} />
     </Provider>
   );
 };
+
+export const Primary = PeopleListStory.bind({});
+Primary.argTypes = {
+  loading: {
+    description: 'Whether the component is in a loading state',
+    control: { type: 'boolean' },
+    name: 'Loading',
+  },
+  perPage: {
+    description: 'The number of people to show per page',
+    control: { type: 'number', min: 1 },
+    name: 'Per Page',
+  },
+  peopleNames: {
+    description: 'The names of the people to show',
+    control: { type: 'object' },
+    name: 'People',
+  },
+};
+Primary.args = {
+  loading: initialPeopleState.loading === LoadingState.Pending,
+  perPage: initialPeopleState.perPage,
+  peopleNames: ['Luke Skywalker', 'C-3PO', 'R2-D2'],
+} as PeopleListStoryProps;

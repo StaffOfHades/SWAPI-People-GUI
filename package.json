@@ -55,7 +55,7 @@
     "@nrwl/web": "12.3.3",
     "@nrwl/workspace": "12.3.3",
     "@storybook/addon-actions": "^6.2.9",
-    "@storybook/addon-knobs": "^6.2.7",
+    "@storybook/addon-controls": "^6.2.9",
     "@storybook/react": "^6.2.7",
     "@svgr/webpack": "^5.4.0",
     "@testing-library/jest-dom": "^5.12.0",
