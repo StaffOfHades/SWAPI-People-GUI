@@ -10,7 +10,7 @@ describe('swapi-gui', () => {
 
     cy.fixture('people-page-1.json').as('peoplePage1');
 
-    cy.get('@peoplePage1').then((page) => {
+    cy.get('@peoplePage1').then((page: any) => {
       cy.get('.PeopleList_people-list__1_L3M > li').each((el, index) => {
         cy.wrap(el).should('contain', page.results[index].name);
       });
@@ -40,7 +40,7 @@ describe('swapi-gui', () => {
 
     cy.get(':nth-child(3) > button').click();
 
-    cy.get('@peoplePage2').then((page) => {
+    cy.get('@peoplePage2').then((page: any) => {
       cy.get('.PeopleList_people-list__1_L3M > li').each((el, index) => {
         cy.wrap(el).should('contain', page.results[index + 2].name);
       });
@@ -68,7 +68,7 @@ describe('swapi-gui', () => {
 
     cy.wait('@getPeopleSearchSkywalkerPage1');
 
-    cy.get('@peopleSearchSkywalkerPage1').then((page) => {
+    cy.get('@peopleSearchSkywalkerPage1').then((page: any) => {
       cy.get('.PeopleList_people-list__1_L3M > li').each((el, index) => {
         cy.wrap(el).should('contain', page.results[index]?.name ?? '\u00a0');
       });
@@ -104,7 +104,7 @@ describe('swapi-gui', () => {
 
     cy.get('input').should('be.empty');
 
-    cy.get('@peoplePage1').then((page) => {
+    cy.get('@peoplePage1').then((page: any) => {
       cy.get('.PeopleList_people-list__1_L3M > li').each((el, index) => {
         cy.wrap(el).should('contain', page.results[index].name);
       });
