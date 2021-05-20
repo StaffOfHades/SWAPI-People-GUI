@@ -29,12 +29,9 @@ jobs:
       - name: Retrivies repository from remote server
         uses: actions/checkout@v2
 
-      - name: Injects github ref slug
-        run: export GITHUB_REF_SLUG="${GITHUB_REF##*/}"
-
       # Gets branch name
       - name: Branch name
-        run: echo "running on branch ${GITHUB_REF_SLUG}"
+        run: echo "running on branch ${GITHUB_REF##*/}"
 
       # Sets-up node-js environment
       - name: Use Node.js 14
@@ -46,7 +43,7 @@ jobs:
       - run: npm ci
 
       # Runs units tests
-      - run: npx nx affected:test --base "${GITHUB_REF_SLUG}"
+      - run: npx nx affected:test --base "${GITHUB_REF##*/}"
 
       # Runs 2e2 tests
-      - run: npx nx affected:e2e --base "${GITHUB_REF_SLUG}"
+      - run: npx nx affected:e2e --base "${GITHUB_REF##*/}"
