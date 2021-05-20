@@ -24,7 +24,7 @@ export function PeopleSearchbar(): JSX.Element {
     if (loadingState === LoadingState.Pending) return;
     dispatch(setPage(1));
     dispatch(resetPeople());
-    dispatch(fetchPeoplePage({ pageUrl: 'https://swapi.dev/api/people/?page=1', search }));
+    dispatch(fetchPeoplePage({ pageUrl: 'http://swapi.dev/api/people/?page=1', search }));
   }
 
   function handleSearchChange({
@@ -38,7 +38,7 @@ export function PeopleSearchbar(): JSX.Element {
     dispatch(setSearchTerm(''));
     dispatch(setPage(1));
     dispatch(resetPeople());
-    dispatch(fetchPeoplePage({ pageUrl: 'https://swapi.dev/api/people/?page=1' }));
+    dispatch(fetchPeoplePage({ pageUrl: 'http://swapi.dev/api/people/?page=1' }));
   }
 
   return (

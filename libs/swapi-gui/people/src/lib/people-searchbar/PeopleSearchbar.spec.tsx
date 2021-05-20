@@ -81,7 +81,7 @@ describe('PeopleList', () => {
   });
   describe('when user clicks button', () => {
     const mockStore = configureStore([thunkMiddleware]);
-    const pageUrl = 'https://swapi.dev/api/people/?page=1';
+    const pageUrl = 'http://swapi.dev/api/people/?page=1';
     afterEach(() => fetchMock.reset());
     test('should fire search action if search button', async () => {
       const store = mockStore({ [PeopleFeatureKey]: { ...initialPeopleState, search } });

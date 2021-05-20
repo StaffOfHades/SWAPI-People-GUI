@@ -29,7 +29,7 @@ const PeopleListStory: Story<PeopleListStoryProps> = ({
   const loading = isLoading ? LoadingState.Pending : LoadingState.Idle;
   const people = peopleNames.map((name, index) => ({
     name,
-    url: `https://swapi.dev/api/people/${index}`,
+    url: `http://swapi.dev/api/people/${index}`,
   }));
 
   const modifiedState = peopleAdapter.addMany(initialPeopleState, people);

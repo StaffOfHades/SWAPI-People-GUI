@@ -6,7 +6,7 @@ import { fetchPeoplePage } from '@teachable/swapi-gui/people';
 import { App } from './app';
 import store from './store';
 
-store.dispatch(fetchPeoplePage({ pageUrl: 'https://swapi.dev/api/people/?page=1' }));
+store.dispatch(fetchPeoplePage({ pageUrl: 'http://swapi.dev/api/people/?page=1' }));
 
 ReactDOM.render(
   <StrictMode>

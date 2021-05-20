@@ -33,7 +33,7 @@ function mapStateToProps(state: PartialRootState) {
 const PeoplePaginatorLink = connect(mapStateToProps)(BasePeoplePaginatorLink);
 
 describe('PeoplePaginatorLink', () => {
-  const pageUrl = 'https://swapi.dev/api/people/?page=1';
+  const pageUrl = 'http://swapi.dev/api/people/?page=1';
   const people = [
     {
       name: 'Luke Skywalker',

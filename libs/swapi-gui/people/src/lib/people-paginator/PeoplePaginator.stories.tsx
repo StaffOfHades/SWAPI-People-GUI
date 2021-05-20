@@ -16,7 +16,7 @@ import {
 import { PeoplePaginator } from './PeoplePaginator';
 
 const mockStore = configureStore([thunkMiddleware]);
-const pageUrl = 'https://swapi.dev/api/people/?page=1';
+const pageUrl = 'http://swapi.dev/api/people/?page=1';
 const peopleSliceAction = action('People Slice');
 
 export default {

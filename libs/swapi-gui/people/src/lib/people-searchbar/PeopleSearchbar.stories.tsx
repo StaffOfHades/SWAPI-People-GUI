@@ -16,7 +16,7 @@ import {
 import { PeopleSearchbar } from './PeopleSearchbar';
 
 const mockStore = configureStore([thunkMiddleware]);
-const pageUrl = 'https://swapi.dev/api/people/?page=1';
+const pageUrl = 'http://swapi.dev/api/people/?page=1';
 const peopleSliceAction = action('People Slice');
 
 export default {
@@ -40,7 +40,7 @@ const PeopleSearchbarStory: Story<PeopleSearchbarStoryProps> = ({
   const loading = isLoading ? LoadingState.Pending : LoadingState.Idle;
   const people = peopleNames.map((name, index) => ({
     name,
-    url: `https://swapi.dev/api/people/${index}`,
+    url: `http://swapi.dev/api/people/${index}`,
   }));
 
   const modifiedState = peopleAdapter.addMany(initialPeopleState, people);

@@ -35,7 +35,7 @@ const PeoplePaginatorLink = connect(mapStateToProps)(BasePeoplePaginatorLink);
 const count = Number.MAX_VALUE;
 const mockStore = configureStore([thunkMiddleware]);
 const peopleSliceAction = action('People Slice');
-const pageUrl = 'https://swapi.dev/api/people/?page=1';
+const pageUrl = 'http://swapi.dev/api/people/?page=1';
 
 export default {
   component: PeoplePaginatorLink,

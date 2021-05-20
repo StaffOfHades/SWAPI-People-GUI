@@ -19,7 +19,7 @@ import { PeoplePage } from './PeoplePage';
 import { RootState, usePeopleDispatch, usePeopleSelector } from './hooks';
 
 const peopleSliceAction = action('People Slice');
-const pageUrl = 'https://swapi.dev/api/people/?page=1';
+const pageUrl = 'http://swapi.dev/api/people/?page=1';
 
 const storyboardActionLogger: Middleware<unknown, RootState> = (storeApi) => (next) => (action) => {
   peopleSliceAction(action);
@@ -74,7 +74,7 @@ const PeoplePageStory: Story<PeoplePageStoryProps> = ({
   useEffect(() => {
     const generatedPeople = peopleNames.map((name, index) => ({
       name,
-      url: `https://swapi.dev/api/people/${index}`,
+      url: `http://swapi.dev/api/people/${index}`,
     }));
     setPeople(generatedPeople);
     dispatch(

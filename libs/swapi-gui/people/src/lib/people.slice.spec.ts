@@ -78,7 +78,7 @@ describe('people slice', () => {
   });
   describe('when using async thunk', () => {
     const mockStore = configureStore([thunkMiddleware]);
-    const url = 'https://swapi.dev/api/people/?page=1';
+    const url = 'http://swapi.dev/api/people/?page=1';
     afterEach(() => fetchMock.reset());
     test('should properly handle fetch & set returned data', async () => {
       const data = {
