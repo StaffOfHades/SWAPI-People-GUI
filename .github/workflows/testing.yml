@@ -28,6 +28,10 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      # Gets branch name
+      - name: Branch name
+        run: echo running on branch ${GITHUB_REF##*/}
+
       # Sets-up node-js environment
       - name: Use Node.js 14
         uses: actions/setup-node@v2
@@ -38,7 +42,7 @@ jobs:
       - run: npm ci
 
       # Runs units tests
-      - run: npx --yes nx affected:test
+      - run: npx nx affected:test --base ${GITHUB_REF##*/}
 
       # Runs 2e2 tests
-      - run: npx --yes nx affected:e2e
+      - run: npx nx affected:e2e --base ${GITHUB_REF##*/}
