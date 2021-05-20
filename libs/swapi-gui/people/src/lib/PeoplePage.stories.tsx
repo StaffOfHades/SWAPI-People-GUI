@@ -47,8 +47,10 @@ export default {
 };
 
 export const Primary = () => {
+  const count = usePeopleSelector((state) => state[PeopleFeatureKey].count);
   const dispatch = usePeopleDispatch();
   const isLoading = boolean('Loading', initialPeopleState.loading === LoadingState.Pending);
+  const [people, setPeople] = useState([]);
   const peopleNames = array('People', ['Luke Skywalker', 'C-3PO', 'R2-D2']);
   const perPage = number('Per Page', initialPeopleState.perPage);
   const search = usePeopleSelector((state) => state[PeopleFeatureKey].search);
@@ -62,24 +64,58 @@ export const Primary = () => {
   }, [dispatch, perPage]);
 
   useEffect(() => {
-    let people = peopleNames.map((name, index) => ({
+    const generatedPeople = peopleNames.map((name, index) => ({
       name,
       url: `https://swapi.dev/api/people/${index}`,
     }));
+    setPeople(generatedPeople);
+    dispatch(
+      fetchPeoplePage.fulfilled(
+        {
+          current: pageUrl,
+          count: generatedPeople.length,
+          next: pageUrl,
+          previous: pageUrl,
+          results: generatedPeople,
+        },
+        undefined,
+        { page: pageUrl }
+      )
+    );
+  }, [dispatch, peopleNames]);
+
+  useEffect(() => {
+    let filteredPeople = people;
     if (search.trim().length > 0) {
-      people = people.filter((person) => person.name.includes(search));
+      filteredPeople = filteredPeople.filter((person) => person.name.includes(search));
     }
-    const response = {
+    fetchMock.mock(`begin:${pageUrl}`, {
       current: pageUrl,
-      count: people.length,
+      count: filteredPeople.length,
       next: pageUrl,
       previous: pageUrl,
-      results: people,
-    };
-    dispatch(fetchPeoplePage.fulfilled(response, undefined, { page: pageUrl, search }));
-    fetchMock.mock(`begin:${pageUrl}`, response);
+      results: filteredPeople,
+    });
     return fetchMock.reset;
-  }, [dispatch, peopleNames, search]);
+  }, [dispatch, people, search]);
+
+  useEffect(() => {
+    if (people.length !== count && search.trim().length === 0) {
+      dispatch(
+        fetchPeoplePage.fulfilled(
+          {
+            current: pageUrl,
+            count: people.length,
+            next: pageUrl,
+            previous: pageUrl,
+            results: people,
+          },
+          undefined,
+          { page: pageUrl }
+        )
+      );
+    }
+  }, [count, dispatch, people, search]);
 
   return <PeoplePage />;
 };
