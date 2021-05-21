@@ -1,4 +1,4 @@
-describe('swapi-gui', () => {
+describe('swapi-gui: /', () => {
   it('should load people page correctly', () => {
     cy.intercept('GET', 'http://swapi.dev/api/people/?page=1', {
       fixture: 'people-page-1.json',
@@ -44,6 +44,26 @@ describe('swapi-gui', () => {
       cy.get('.PeopleList_people-list__1_L3M > li').each((el, index) => {
         cy.wrap(el).should('contain', page.results[index + 2].name);
       });
+    });
+  });
+  it('should allow navigating to an individual person page', () => {
+    cy.intercept('GET', 'http://swapi.dev/api/people/?page=1', {
+      delay: 100,
+      fixture: 'people-page-1.json',
+    }).as('getPeoplePage1');
+
+    cy.visit('/');
+
+    cy.wait('@getPeoplePage1');
+
+    cy.fixture('people-page-1.json').then((page) => {
+      const [{ name, url }] = page.results;
+      cy.get(':nth-child(1) > .PeopleListItem_PeopleListItem-link__PiGPr')
+        .should('contain', name)
+        .click();
+
+      cy.url().should('include', url);
+      cy.get('h2').should('contain', page.results[0].name);
     });
   });
   it('should allow searching for a people by name', () => {

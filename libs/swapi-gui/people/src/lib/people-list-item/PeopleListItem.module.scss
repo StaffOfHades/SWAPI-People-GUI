@@ -1,0 +1,12 @@
+.PeopleListItem-link {
+  color: #544a63;
+  &:hover {
+    color: #382f45;
+  }
+  &:link {
+    color: #4a6558;
+    &:hover {
+      color: #2e473b;
+    }
+  }
+}

@@ -1,13 +1,13 @@
-import { MemoryRouter as Router } from 'react-router-dom';
+import { MemoryRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { getByText, queryByText } from '@testing-library/dom';
 import { render } from '@testing-library/react';
 
 import { PeopleFeatureKey, initialPeopleState, peopleAdapter } from '../people.slice';
-import { PeopleListItem } from './PeopleListItem';
+import { PersonPage } from './PersonPage';
 
-describe('PeopleListItem', () => {
+describe('PersonPage', () => {
   const mockStore = configureStore();
   const people = [
     {
@@ -32,12 +32,17 @@ describe('PeopleListItem', () => {
 
     const { container } = render(
       <Provider store={store}>
-        <Router>
-          <PeopleListItem id={person.url} />
+        <Router initialEntries={[`/${person.url}`]}>
+          <Switch>
+            <Route path={'/:id([\\w.\\/:]+)'}>
+              <PersonPage />
+            </Route>
+          </Switch>
         </Router>
       </Provider>
     );
 
+    expect(queryByText(container, 'Not Found')).not.toBeInTheDocument();
     expect(getByText(container, person.name)).toBeInTheDocument();
   });
   test('should render invalid value for invalid id', () => {
@@ -46,13 +51,13 @@ describe('PeopleListItem', () => {
     const { container } = render(
       <Provider store={store}>
         <Router>
-          <PeopleListItem id={'invalid_id'} />
+          <PersonPage />
         </Router>
       </Provider>
     );
 
     const [person] = people;
     expect(queryByText(container, person.name)).not.toBeInTheDocument();
-    expect(getByText(container, 'N/A')).toBeInTheDocument();
+    expect(getByText(container, 'Not Found')).toBeInTheDocument();
   });
 });

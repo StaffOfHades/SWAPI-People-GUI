@@ -57,4 +57,20 @@ describe('swapi-gui-people: PeoplePage component', () => {
       .should('contain', peopleNames[0]);
     cy.get('._1VZJTJEQdzwUk1LUczy4Pz > :nth-child(1)').should('contain', `Page 1 of ${maxPages}`);
   });
+  it('should allow selecting a person to view their information', () => {
+    const perPage = 1;
+    const peopleNames = ['Luke Skywalker', 'C-3PO', 'R2-D2'];
+
+    const peopleArgs = peopleNames.map((name, index) => `peopleNames[${index}]:${name}`).join(';');
+
+    const maxPages = Math.ceil(peopleNames.length / perPage);
+
+    cy.visit(`iframe.html?id=peoplepage--primary&args=perPage:${perPage};${peopleArgs}`);
+
+    cy.get('._16okpVMjs9MxyzlDRog5UN').should('contain', peopleNames[0]).click();
+
+    cy.get('._1VZJTJEQdzwUk1LUczy4Pz > :nth-child(1)').should('not.exist');
+    cy.contains(`Page 1 of ${maxPages}`).should('not.exist');
+    cy.get('h2').should('contain', peopleNames[0]);
+  });
 });

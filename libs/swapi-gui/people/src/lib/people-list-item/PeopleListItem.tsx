@@ -1,14 +1,16 @@
+import { Link, useRouteMatch } from 'react-router-dom';
 import React, { FunctionComponent } from 'react';
 
 import { selectPersonById } from '../people.slice';
 import { usePeopleSelector } from '../hooks';
-import './PeopleListItem.module.scss';
+import styles from './PeopleListItem.module.scss';
 
 export interface PeopleListItemProps {
   id: string;
 }
 
 export const PeopleListItem: FunctionComponent<PeopleListItemProps> = ({ id }) => {
+  const match = useRouteMatch();
   const person = usePeopleSelector((state) => selectPersonById(state, id));
 
   // Verify we have a person to show
@@ -17,7 +19,13 @@ export const PeopleListItem: FunctionComponent<PeopleListItemProps> = ({ id }) =
   }
   const { name } = person;
 
-  return <li>{name}</li>;
+  return (
+    <li>
+      <Link className={styles['PeopleListItem-link']} to={`${match.url}${id}`}>
+        {name}
+      </Link>
+    </li>
+  );
 };
 
 export default PeopleListItem;

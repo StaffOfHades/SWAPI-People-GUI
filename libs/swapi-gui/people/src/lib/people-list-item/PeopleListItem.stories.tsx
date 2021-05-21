@@ -1,3 +1,4 @@
+import { MemoryRouter as Router } from 'react-router-dom';
 import { Meta, Story } from '@storybook/react';
 import { Provider } from 'react-redux';
 import React from 'react';
@@ -32,7 +33,9 @@ const PeopleListItemStory: Story<PeopleListItemStoryProps> = ({ children, name, 
 
   return (
     <Provider store={store}>
-      <PeopleListItem id={person.url} {...args} />
+      <Router>
+        <PeopleListItem id={person.url} {...args} />
+      </Router>
     </Provider>
   );
 };

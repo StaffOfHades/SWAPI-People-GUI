@@ -1,3 +1,4 @@
+import { MemoryRouter as Router } from 'react-router-dom';
 import { Meta, Story } from '@storybook/react';
 import { Provider } from 'react-redux';
 import React from 'react';
@@ -38,7 +39,9 @@ const PeopleListStory: Story<PeopleListStoryProps> = ({
 
   return (
     <Provider store={store}>
-      <PeopleList {...args} />
+      <Router>
+        <PeopleList {...args} />
+      </Router>
     </Provider>
   );
 };

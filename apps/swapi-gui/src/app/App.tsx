@@ -18,7 +18,7 @@ export function App(): JSX.Element {
           </ul>
 
           <Switch>
-            <Route exact path="/">
+            <Route path="/">
               <PeoplePage className={styles['App-content']} />
             </Route>
           </Switch>

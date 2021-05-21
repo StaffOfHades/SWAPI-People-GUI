@@ -1,3 +1,4 @@
+import { MemoryRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { getByText } from '@testing-library/dom';
@@ -29,7 +30,9 @@ describe('PeopleList', () => {
 
     const { container } = render(
       <Provider store={store}>
-        <PeopleList />
+        <Router>
+          <PeopleList />
+        </Router>
       </Provider>
     );
 
@@ -45,7 +48,9 @@ describe('PeopleList', () => {
 
     const { container } = render(
       <Provider store={store}>
-        <PeopleList />
+        <Router>
+          <PeopleList />
+        </Router>
       </Provider>
     );
 
