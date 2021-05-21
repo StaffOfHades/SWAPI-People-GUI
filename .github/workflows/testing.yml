@@ -43,7 +43,7 @@ jobs:
       - run: npm ci
 
       # Runs units tests
-      - run: npx nx affected:test --base "${GITHUB_REF##*/}"
+      - run: npx nx affected:test
 
       # Runs 2e2 tests
-      - run: npx nx affected:e2e --base "${GITHUB_REF##*/}"
+      - run: npx nx affected:e2e
