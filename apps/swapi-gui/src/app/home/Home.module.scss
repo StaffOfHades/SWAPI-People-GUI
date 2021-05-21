@@ -1,0 +1,27 @@
+.Home-link {
+  color: #544a63;
+  &:hover {
+    color: #382f45;
+  }
+  &:link {
+    color: #4a6558;
+    &:hover {
+      color: #2e473b;
+    }
+  }
+}
+
+.Home-quick-access-list {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  li {
+    font-size: 2rem;
+    &:not(:last-child) {
+      margin-bottom: 1.5rem;
+    }
+  }
+}

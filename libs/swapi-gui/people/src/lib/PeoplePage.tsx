@@ -21,6 +21,7 @@ export const PeoplePage: FunctionComponent<PeoplePageProps> = ({ className }): J
 
   return (
     <div className={classNames('People', className)}>
+      <h1>People & Characters</h1>
       <Switch>
         <Route path={`${path}:id([\\w.\\/:]+)`}>
           <PersonPage />

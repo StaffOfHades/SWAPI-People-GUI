@@ -1,10 +1,10 @@
-describe('swapi-gui: /', () => {
+describe('swapi-gui: /people', () => {
   it('should load people page correctly', () => {
     cy.intercept('GET', 'http://swapi.dev/api/people/?page=1', {
       fixture: 'people-page-1.json',
     }).as('getPeoplePage1');
 
-    cy.visit('/');
+    cy.visit('/people');
 
     cy.wait('@getPeoplePage1');
 
@@ -26,7 +26,7 @@ describe('swapi-gui: /', () => {
       fixture: 'people-page-2.json',
     }).as('getPeoplePage2');
 
-    cy.visit('/');
+    cy.visit('/people');
 
     cy.wait('@getPeoplePage1');
 
@@ -52,7 +52,7 @@ describe('swapi-gui: /', () => {
       fixture: 'people-page-1.json',
     }).as('getPeoplePage1');
 
-    cy.visit('/');
+    cy.visit('/people');
 
     cy.wait('@getPeoplePage1');
 
@@ -76,7 +76,7 @@ describe('swapi-gui: /', () => {
       fixture: 'people-page-1.json',
     }).as('getPeoplePage1');
 
-    cy.visit('/');
+    cy.visit('/people');
 
     cy.wait('@getPeoplePage1');
 
@@ -104,7 +104,7 @@ describe('swapi-gui: /', () => {
       fixture: 'people-page-1.json',
     }).as('getPeoplePage1');
 
-    cy.visit('/');
+    cy.visit('/people');
 
     cy.wait('@getPeoplePage1');
 

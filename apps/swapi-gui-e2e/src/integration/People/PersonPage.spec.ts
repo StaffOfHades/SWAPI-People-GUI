@@ -1,4 +1,4 @@
-describe('swapi-gui: /:id', () => {
+describe('swapi-gui: /people/:id', () => {
   it('should allow navigating to an individual person page', () => {
     cy.intercept('GET', 'http://swapi.dev/api/people/?page=1', {
       delay: 100,
@@ -8,7 +8,7 @@ describe('swapi-gui: /:id', () => {
     cy.fixture('people-page-1.json').then((page) => {
       const [person] = page.results;
       const { name, url } = person;
-      cy.visit(`/${url}`);
+      cy.visit(`/people/${url}`);
 
       cy.wait('@getPeoplePage1');
 

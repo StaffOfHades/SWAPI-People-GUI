@@ -13,6 +13,10 @@ export const PeopleListItem: FunctionComponent<PeopleListItemProps> = ({ id }) =
   const match = useRouteMatch();
   const person = usePeopleSelector((state) => selectPersonById(state, id));
 
+  let { path } = match;
+
+  if (path[path.length - 1] !== '/') path += '/';
+
   // Verify we have a person to show
   if (person === undefined) {
     return <li>N/A</li>;
@@ -21,7 +25,7 @@ export const PeopleListItem: FunctionComponent<PeopleListItemProps> = ({ id }) =
 
   return (
     <li>
-      <Link className={styles['PeopleListItem-link']} to={`${match.url}${id}`}>
+      <Link className={styles['PeopleListItem-link']} to={`${path}${id}`}>
         {name}
       </Link>
     </li>
