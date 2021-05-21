@@ -28,10 +28,11 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Retrivies repository from remote server
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
-      # Gets branch name
-      - name: Branch name
-        run: echo "running on branch ${GITHUB_REF##*/}"
+      - name: Retrivies master branch information for NX
+        run: git fetch origin master
 
       # Sets-up node-js environment
       - name: Use Node.js 14
@@ -39,7 +40,7 @@ jobs:
         with:
           node-version: '14'
 
-      # Gets project dependencies
+      # Retrivies project dependencies
       - run: npm ci
 
       # Runs units tests
