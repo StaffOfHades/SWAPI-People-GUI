@@ -1,3 +1,4 @@
+import { MemoryRouter as Router } from 'react-router-dom';
 import { Meta, Story } from '@storybook/react';
 import { Middleware } from 'redux';
 import { Provider } from 'react-redux';
@@ -38,7 +39,9 @@ export default {
   decorators: [
     (Story) => (
       <Provider store={store}>
-        <Story />
+        <Router>
+          <Story />
+        </Router>
       </Provider>
     ),
   ],

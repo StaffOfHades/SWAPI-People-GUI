@@ -1,3 +1,4 @@
+import { MemoryRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { render } from '@testing-library/react';
@@ -10,7 +11,9 @@ test('PeoplePage should render all of its parts', () => {
   const store = mockStore({ [PeopleFeatureKey]: initialPeopleState });
   const { container } = render(
     <Provider store={store}>
-      <PeoplePage />
+      <Router>
+        <PeoplePage />
+      </Router>
     </Provider>
   );
   expect(container.childElementCount).toEqual(1);

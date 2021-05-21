@@ -1,3 +1,4 @@
+import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import React, { FunctionComponent } from 'react';
 import classNames from 'classnames';
 
@@ -10,12 +11,20 @@ export interface PeoplePageProps {
   className?: string;
 }
 
-export const PeoplePage: FunctionComponent<PeoplePageProps> = ({ className }): JSX.Element => (
-  <div className={classNames('People', className)}>
-    <PeopleSearchbar />
-    <PeopleList />
-    <PeoplePaginator />
-  </div>
-);
+export const PeoplePage: FunctionComponent<PeoplePageProps> = ({ className }): JSX.Element => {
+  const match = useRouteMatch();
+
+  return (
+    <div className={classNames('People', className)}>
+      <Switch>
+        <Route path={match.path}>
+          <PeopleSearchbar />
+          <PeopleList />
+          <PeoplePaginator />
+        </Route>
+      </Switch>
+    </div>
+  );
+};
 
 export default PeoplePage;
