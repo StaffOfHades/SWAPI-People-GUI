@@ -21,7 +21,7 @@ describe('swapi-gui-people: PeoplePage component', () => {
       .should('not.contain', peopleNames[1])
       .should('contain', peopleNames[2]);
     cy.get('._1VZJTJEQdzwUk1LUczy4Pz > :nth-child(1)').should('contain', `Page 3 of ${maxPages}`);
-    cy.get(':nth-child(2) > button').click();
+    cy.get('._1VZJTJEQdzwUk1LUczy4Pz > :nth-child(2) > button').click();
     cy.get('.holWNvt-innPRNFUITZci > li')
       .should('not.contain', peopleNames[2])
       .should('contain', peopleNames[1]);
