@@ -14,12 +14,12 @@ describe('PeoplePaginator', () => {
       const store = mockStore({ [PeopleFeatureKey]: { ...initialPeopleState, page, count: 20 } });
       const maxPage = selectMaxPage(store.getState());
 
-      const { container } = render(
+      const { baseElement } = render(
         <Provider store={store}>
           <PeoplePaginator />
         </Provider>
       );
-      const button = getByText(container, 'Anterior');
+      const button = getByText(baseElement, 'Anterior');
       expect(button).toBeInTheDocument();
       const list = button.closest('ul');
       expect(list).toBeInTheDocument();

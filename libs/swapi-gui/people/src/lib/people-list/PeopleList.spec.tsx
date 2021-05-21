@@ -28,7 +28,7 @@ describe('PeopleList', () => {
     const modifiedState = peopleAdapter.upsertMany(initialPeopleState, people);
     const store = mockStore({ [PeopleFeatureKey]: modifiedState });
 
-    const { container } = render(
+    const { baseElement } = render(
       <Provider store={store}>
         <Router>
           <PeopleList />
@@ -37,7 +37,7 @@ describe('PeopleList', () => {
     );
 
     for (const p in people) {
-      expect(getByText(container, people[p].name)).toBeInTheDocument();
+      expect(getByText(baseElement, people[p].name)).toBeInTheDocument();
     }
   });
   test('should render loading state correctly', () => {
@@ -46,7 +46,7 @@ describe('PeopleList', () => {
       [PeopleFeatureKey]: { ...modifiedState, loading: LoadingState.Pending },
     });
 
-    const { container } = render(
+    const { baseElement } = render(
       <Provider store={store}>
         <Router>
           <PeopleList />
@@ -54,6 +54,6 @@ describe('PeopleList', () => {
       </Provider>
     );
 
-    expect(getByText(container, '...Loading')).toBeInTheDocument();
+    expect(getByText(baseElement, '...Loading')).toBeInTheDocument();
   });
 });

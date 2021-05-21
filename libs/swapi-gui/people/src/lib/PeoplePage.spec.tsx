@@ -10,18 +10,19 @@ import { PeoplePage } from './PeoplePage';
 test('PeoplePage should render all of its parts', () => {
   const mockStore = configureStore();
   const store = mockStore({ [PeopleFeatureKey]: initialPeopleState });
-  const { container } = render(
+  const { baseElement } = render(
     <Provider store={store}>
       <Router>
         <PeoplePage />
       </Router>
     </Provider>
   );
-  expect(container.childElementCount).toEqual(1);
-  expect(container).toBe(container.closest('div'));
-  expect(container.firstChild.childElementCount).toEqual(4);
-  const [title, peopleSearchBar, peopleList, peoplePaginator] = container.firstChild.childNodes;
-  expect(getByText(title, 'People & Characters')).toBeInTheDocument();
+  const title = getByText(baseElement, 'People & Characters');
+  expect(title).toBeInTheDocument();
+  const parent = title.parentNode;
+  expect(parent).toBe(parent.closest('div'));
+  expect(parent.childElementCount).toEqual(4);
+  const [, peopleSearchBar, peopleList, peoplePaginator] = parent.childNodes;
   expect(peopleSearchBar.classList.contains('people-searchbar')).toBe(true);
   expect(peopleList.classList.contains('people-list')).toBe(true);
   expect(peoplePaginator.classList.contains('people-paginator')).toBe(true);

@@ -24,59 +24,59 @@ describe('PeopleList', () => {
     test('should have input match data from store', () => {
       const store = mockStore({ [PeopleFeatureKey]: { ...initialPeopleState, search } });
 
-      const { container } = render(
+      const { baseElement } = render(
         <Provider store={store}>
           <PeopleSearchbar />
         </Provider>
       );
 
-      expect(getByDisplayValue(container, search)).toBeInTheDocument();
+      expect(getByDisplayValue(baseElement, search)).toBeInTheDocument();
     });
     test('should have disabled submit button with empty query', () => {
       const store = mockStore({ [PeopleFeatureKey]: initialPeopleState });
 
-      const { container } = render(
+      const { baseElement } = render(
         <Provider store={store}>
           <PeopleSearchbar />
         </Provider>
       );
 
-      expect(getByText(container, 'Search').attributes).toHaveProperty('disabled');
+      expect(getByText(baseElement, 'Search').attributes).toHaveProperty('disabled');
     });
     test('should have enabled submit button with non-empty query', () => {
       const store = mockStore({ [PeopleFeatureKey]: { ...initialPeopleState, search } });
 
-      const { container } = render(
+      const { baseElement } = render(
         <Provider store={store}>
           <PeopleSearchbar />
         </Provider>
       );
 
-      expect(getByText(container, 'Search').attributes).not.toHaveProperty('disabled');
+      expect(getByText(baseElement, 'Search').attributes).not.toHaveProperty('disabled');
     });
     test('should have disabled clear button when loading', () => {
       const store = mockStore({
         [PeopleFeatureKey]: { ...initialPeopleState, loading: LoadingState.Pending },
       });
 
-      const { container } = render(
+      const { baseElement } = render(
         <Provider store={store}>
           <PeopleSearchbar />
         </Provider>
       );
 
-      expect(getByText(container, 'Clear').attributes).toHaveProperty('disabled');
+      expect(getByText(baseElement, 'Clear').attributes).toHaveProperty('disabled');
     });
     test('should have enabled clear button when not loading', () => {
       const store = mockStore({ [PeopleFeatureKey]: initialPeopleState });
 
-      const { container } = render(
+      const { baseElement } = render(
         <Provider store={store}>
           <PeopleSearchbar />
         </Provider>
       );
 
-      expect(getByText(container, 'Clear').attributes).not.toHaveProperty('disabled');
+      expect(getByText(baseElement, 'Clear').attributes).not.toHaveProperty('disabled');
     });
   });
   describe('when user clicks button', () => {
@@ -88,13 +88,13 @@ describe('PeopleList', () => {
       const query = { pageUrl, search };
       fetchMock.mock(`${query.pageUrl}&search=${query.search}`, {});
 
-      const { container } = render(
+      const { baseElement } = render(
         <Provider store={store}>
           <PeopleSearchbar />
         </Provider>
       );
 
-      userEvent.click(getByText(container, 'Search'));
+      userEvent.click(getByText(baseElement, 'Search'));
 
       await waitFor(() => expect(store.getActions().length).toBe(4));
 
@@ -117,13 +117,13 @@ describe('PeopleList', () => {
       const query = { pageUrl };
       fetchMock.mock(query.pageUrl, {});
 
-      const { container } = render(
+      const { baseElement } = render(
         <Provider store={store}>
           <PeopleSearchbar />
         </Provider>
       );
 
-      userEvent.click(getByText(container, 'Clear'));
+      userEvent.click(getByText(baseElement, 'Clear'));
 
       await waitFor(() => expect(store.getActions().length).toBe(5));
 

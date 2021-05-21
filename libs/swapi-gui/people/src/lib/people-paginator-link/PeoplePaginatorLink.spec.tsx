@@ -61,14 +61,14 @@ describe('PeoplePaginatorLink', () => {
       });
       const text = 'Link';
 
-      const { container } = render(
+      const { baseElement } = render(
         <Provider store={store}>
           <PeoplePaginatorLink>{text}</PeoplePaginatorLink>
         </Provider>
       );
 
-      const button = getByText(container, '...Loading');
-      expect(queryByText(container, text)).not.toBeInTheDocument();
+      const button = getByText(baseElement, '...Loading');
+      expect(queryByText(baseElement, text)).not.toBeInTheDocument();
       expect(button).toBeInTheDocument();
       expect(button.attributes).toHaveProperty('disabled');
     });
@@ -79,7 +79,7 @@ describe('PeoplePaginatorLink', () => {
     test('should be disabled if url it not defined', () => {
       const store = mockStore({ [PeopleFeatureKey]: { ...modifiedState, count: 3 } });
 
-      const { container } = render(
+      const { baseElement } = render(
         <Provider store={store}>
           <PeoplePaginatorLink pageUrl={null} type={PeoplePaginatorLinkType.Next}>
             {text}
@@ -87,12 +87,12 @@ describe('PeoplePaginatorLink', () => {
         </Provider>
       );
 
-      expect(getByText(container, text).attributes).toHaveProperty('disabled');
+      expect(getByText(baseElement, text).attributes).toHaveProperty('disabled');
     });
     test('should be disabled on last page', () => {
       const store = mockStore({ [PeopleFeatureKey]: { ...modifiedState, count: 3 } });
 
-      const { container } = render(
+      const { baseElement } = render(
         <Provider store={store}>
           <PeoplePaginatorLink pageUrl={pageUrl} type={PeoplePaginatorLinkType.Next}>
             {text}
@@ -100,12 +100,12 @@ describe('PeoplePaginatorLink', () => {
         </Provider>
       );
 
-      expect(getByText(container, text).attributes).toHaveProperty('disabled');
+      expect(getByText(baseElement, text).attributes).toHaveProperty('disabled');
     });
     test('should be enabled when url is present and not on last page', () => {
       const store = mockStore({ [PeopleFeatureKey]: { ...modifiedState, count: 10 } });
 
-      const { container } = render(
+      const { baseElement } = render(
         <Provider store={store}>
           <PeoplePaginatorLink pageUrl={pageUrl} type={PeoplePaginatorLinkType.Next}>
             {text}
@@ -113,7 +113,7 @@ describe('PeoplePaginatorLink', () => {
         </Provider>
       );
 
-      expect(getByText(container, text).attributes).not.toHaveProperty('disabled');
+      expect(getByText(baseElement, text).attributes).not.toHaveProperty('disabled');
     });
   });
   describe('when rendering of type previous', () => {
@@ -122,7 +122,7 @@ describe('PeoplePaginatorLink', () => {
     test('should be disabled if on first page', () => {
       const store = mockStore({ [PeopleFeatureKey]: initialPeopleState });
 
-      const { container } = render(
+      const { baseElement } = render(
         <Provider store={store}>
           <PeoplePaginatorLink pageUrl={pageUrl} type={PeoplePaginatorLinkType.Previous}>
             {text}
@@ -130,12 +130,12 @@ describe('PeoplePaginatorLink', () => {
         </Provider>
       );
 
-      expect(getByText(container, text).attributes).toHaveProperty('disabled');
+      expect(getByText(baseElement, text).attributes).toHaveProperty('disabled');
     });
     test('should be enabled when not on first page', () => {
       const store = mockStore({ [PeopleFeatureKey]: { ...initialPeopleState, page: 2 } });
 
-      const { container } = render(
+      const { baseElement } = render(
         <Provider store={store}>
           <PeoplePaginatorLink pageUrl={pageUrl} type={PeoplePaginatorLinkType.Previous}>
             {text}
@@ -143,7 +143,7 @@ describe('PeoplePaginatorLink', () => {
         </Provider>
       );
 
-      expect(getByText(container, text).attributes).not.toHaveProperty('disabled');
+      expect(getByText(baseElement, text).attributes).not.toHaveProperty('disabled');
     });
   });
   describe('when activiting next button with a click', () => {
@@ -152,7 +152,7 @@ describe('PeoplePaginatorLink', () => {
     test('should fire increment multiple action if data needs to be loaded', async () => {
       const store = mockStore({ [PeopleFeatureKey]: { ...modifiedState, count: 10, perPage: 3 } });
 
-      const { container } = render(
+      const { baseElement } = render(
         <Provider store={store}>
           <PeoplePaginatorLink pageUrl={pageUrl} type={PeoplePaginatorLinkType.Next}>
             {text}
@@ -160,7 +160,7 @@ describe('PeoplePaginatorLink', () => {
         </Provider>
       );
 
-      userEvent.click(getByText(container, text));
+      userEvent.click(getByText(baseElement, text));
 
       await waitFor(() => expect(store.getActions().length).toBe(3));
 
@@ -181,7 +181,7 @@ describe('PeoplePaginatorLink', () => {
     test('should only fire increment page action if data is loaded', () => {
       const store = mockStore({ [PeopleFeatureKey]: { ...modifiedState, count: 3, perPage: 1 } });
 
-      const { container } = render(
+      const { baseElement } = render(
         <Provider store={store}>
           <PeoplePaginatorLink pageUrl={pageUrl} type={PeoplePaginatorLinkType.Next}>
             {text}
@@ -189,7 +189,7 @@ describe('PeoplePaginatorLink', () => {
         </Provider>
       );
 
-      userEvent.click(getByText(container, text));
+      userEvent.click(getByText(baseElement, text));
 
       const actions = store.getActions();
       expect(actions).toEqual([increasePage()]);
@@ -204,7 +204,7 @@ describe('PeoplePaginatorLink', () => {
         [PeopleFeatureKey]: { ...modifiedState, count: 3, page: 2, perPage: 1 },
       });
 
-      const { container } = render(
+      const { baseElement } = render(
         <Provider store={store}>
           <PeoplePaginatorLink pageUrl={pageUrl} type={PeoplePaginatorLinkType.Previous}>
             {text}
@@ -212,7 +212,7 @@ describe('PeoplePaginatorLink', () => {
         </Provider>
       );
 
-      userEvent.click(getByText(container, text));
+      userEvent.click(getByText(baseElement, text));
 
       const actions = store.getActions();
       expect(actions).toEqual([decreasePage()]);

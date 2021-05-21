@@ -30,7 +30,7 @@ describe('PeopleListItem', () => {
 
     const [person] = people;
 
-    const { container } = render(
+    const { baseElement } = render(
       <Provider store={store}>
         <Router>
           <PeopleListItem id={person.url} />
@@ -38,12 +38,12 @@ describe('PeopleListItem', () => {
       </Provider>
     );
 
-    expect(getByText(container, person.name)).toBeInTheDocument();
+    expect(getByText(baseElement, person.name)).toBeInTheDocument();
   });
   test('should render invalid value for invalid id', () => {
     const store = mockStore({ [PeopleFeatureKey]: initialPeopleState });
 
-    const { container } = render(
+    const { baseElement } = render(
       <Provider store={store}>
         <Router>
           <PeopleListItem id={'invalid_id'} />
@@ -52,7 +52,7 @@ describe('PeopleListItem', () => {
     );
 
     const [person] = people;
-    expect(queryByText(container, person.name)).not.toBeInTheDocument();
-    expect(getByText(container, 'N/A')).toBeInTheDocument();
+    expect(queryByText(baseElement, person.name)).not.toBeInTheDocument();
+    expect(getByText(baseElement, 'N/A')).toBeInTheDocument();
   });
 });
